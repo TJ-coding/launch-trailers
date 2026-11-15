@@ -32,14 +32,14 @@ for f in $formats; do
   node -e 'const fs=require("fs");const s=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));s.format=process.argv[3];fs.writeFileSync(process.argv[2],JSON.stringify(s))' "$dir/trailer.json" "$props" "$f"
   out="$dir/out/$slug-$f.mp4"
   echo "› Rendering $f → $out"
-  npx remotion render Trailer "$out" --props="$props" --public-dir="$dir/public" --scale="$scale" --log=error
+  npx remotion render Trailer "$out" --props="$props" --public-dir="$dir/public" --scale="$scale" --timeout=120000 --log=error
   if [ "$gif" = 1 ]; then
     ffmpeg -loglevel error -y -i "$out" -vf "fps=12,scale=720:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=4" "${out%.mp4}.gif"
     echo "  GIF  ${out%.mp4}.gif"
   fi
   if [ "$poster" = 1 ]; then
     frame="$(node "$KIT/scripts/check-spec.mjs" "$dir" --poster-frame)"
-    npx remotion still Trailer "$dir/out/$slug-$f-poster.png" --props="$props" --public-dir="$dir/public" --frame="$frame" --log=error
+    npx remotion still Trailer "$dir/out/$slug-$f-poster.png" --props="$props" --public-dir="$dir/public" --frame="$frame" --timeout=120000 --log=error
     echo "  PNG  $dir/out/$slug-$f-poster.png"
   fi
 done
