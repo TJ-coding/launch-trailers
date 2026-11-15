@@ -14,8 +14,8 @@ if (!dir) {
   process.exit(1);
 }
 
-const DEFAULT_DURATION = {hook: 3, problem: 4, logo: 2.5, announce: 3, screen: 5, montage: 4, keys: 3, features: 5, stat: 3, beforeAfter: 5, quote: 4, cta: 4};
-const REQUIRED = {hook: ['lines'], problem: ['items'], logo: [], announce: ['title'], screen: [], montage: ['items'], keys: ['keys'], features: ['items'], stat: ['value', 'label'], beforeAfter: ['before', 'after'], quote: ['text'], cta: ['headline']};
+const DEFAULT_DURATION = {hook: 3, problem: 4, logo: 2.5, announce: 3, screen: 5, montage: 4, keys: 3, features: 5, stat: 3, beforeAfter: 5, quote: 4, cta: 4, device3d: 5, assemble: 5, carousel3d: 6, logo3d: 3};
+const REQUIRED = {hook: ['lines'], problem: ['items'], logo: [], announce: ['title'], screen: [], montage: ['items'], keys: ['keys'], features: ['items'], stat: ['value', 'label'], beforeAfter: ['before', 'after'], quote: ['text'], cta: ['headline'], device3d: [], assemble: ['pieces'], carousel3d: ['items'], logo3d: []};
 const FORMATS = ['landscape', 'square', 'vertical'];
 const FONTS = ['Inter', 'Poppins', 'Space Grotesk', 'Manrope', 'DM Sans'];
 const TRANSITIONS = ['fade', 'slide', 'wipe', 'none'];
@@ -83,6 +83,26 @@ const rows = [];
       within(`${where} cursor[${j}]`, c.at, dur);
     });
   }
+  const VIDEO = /\.(mp4|webm|mov|m4v)$/i;
+  if (s.type === 'device3d') {
+    media(where, s.device === 'duo' || !s.device || s.device === 'laptop' ? s.media : s.media ?? s.phoneMedia, true);
+    if (s.device === 'duo') media(`${where} phoneMedia`, s.phoneMedia, true);
+    if (s.motion && !['spin', 'open', 'orbit', 'rise', 'float'].includes(s.motion)) err(`${where}: motion must be spin, open, orbit, rise or float`);
+  }
+  if (['device3d', 'assemble', 'carousel3d'].includes(s.type)) {
+    const files = [s.media, s.phoneMedia, ...(s.items ?? []).map((i) => i.media)].filter(Boolean);
+    for (const f of files) if (VIDEO.test(f)) err(`${where}: 3D scenes take images only (${f}); use a screen scene for video`);
+  }
+  if (s.type === 'assemble') {
+    media(where, s.media, true);
+    if (s.mode && !['assemble', 'explode'].includes(s.mode)) err(`${where}: mode must be assemble or explode`);
+    (s.pieces ?? []).forEach((c, j) => {
+      frac(`${where} pieces[${j}]`, c, ['x', 'y', 'w', 'h']);
+      if (c.x + c.w > 1.001 || c.y + c.h > 1.001) err(`${where} pieces[${j}]: runs off the image`);
+    });
+    if ((s.pieces ?? []).length > 8) warn(`${where}: more than 8 pieces gets busy`);
+  }
+  if (s.type === 'carousel3d') (s.items ?? []).forEach((it, j) => media(`${where} items[${j}]`, it.media, true));
   if (s.type === 'montage') (s.items ?? []).forEach((it, j) => media(`${where} items[${j}]`, it.media, true));
   if (s.type === 'beforeAfter') ['before', 'after'].forEach((k) => s[k] && media(`${where} ${k}`, s[k].media));
   if (s.type === 'features' && s.items?.length > 6) warn(`${where}: only the first 6 items show`);

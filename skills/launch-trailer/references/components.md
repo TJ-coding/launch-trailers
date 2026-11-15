@@ -30,6 +30,24 @@ Helpers: `useEnter(delay, 'soft'|'snappy'|'bouncy')` gives a 0→1 spring,
 Scene helpers: `fitDevice(frame, aspect, boxW, boxH)` and
 `frameHeight(...)` (in `scenes/Screen.tsx`).
 
+## 3D kit (framework/src/three)
+
+| export | what it is |
+|---|---|
+| `Stage3D` | full-frame transparent three.js canvas (`@remotion/three`) with theme lights; children are R3F elements |
+| `CameraRig` | `position`, `target`, `fov`: sets the camera every frame |
+| `fitDistance(w, h, aspect)` | camera distance that fits a w × h box |
+| `Laptop` | `screen` texture, `open` 0..1, `color`, `brightness`; origin = bottom-centre of the base |
+| `Phone` | `screen` texture, `color`; centred |
+| `AppIcon` | `logo` texture, `size` |
+| `Screen3D` | a rounded, cover-fitted textured plane |
+| `useImageTextures(srcs, placeholder)` / `useImageTexture` | load public/ images **in the scene component, outside `<Stage3D>`**, and pass the textures in. The canvas only redraws on frame changes, so a texture loaded inside it never appears |
+| `roundedPlane(w, h, r, crop)` | rounded-rect geometry with UVs mapped to a crop of the texture (used to cut widgets out of a screenshot) |
+| `coverCrop`, `textureAspect`, `placeholderTexture`, `shadowTexture`, `keyboardTexture` | helpers |
+
+Animate by computing values from `useCurrentFrame()` (never R3F's
+`useFrame`), as the 3D scenes in `scenes/` do.
+
 ## A new scene in 20 lines
 
 ```tsx

@@ -34,6 +34,10 @@ Files are names inside the trailer's `public/` folder.
 | `stat` | 3 | `value`, `label`, `prefix?`, `suffix?`, `decimals?` |
 | `beforeAfter` | 5 | `before`/`after`: `{label?, items?[]}` (two cards) **or** `{media}` (one frame, wipe reveal); `title?`, `frame`, `aspect` |
 | `quote` | 4 | `text`, `author?`, `role?` |
+| `logo3d` | 3 | `tagline?`. The app icon (brand.logo on a glossy slab) flies in spinning, then the name types on |
+| `device3d` | 5 | `device` laptop·phone·duo, `media` (laptop screen, or phone screen when device=phone), `phoneMedia` (duo), `motion` spin·open·orbit·rise·float, `color` space·silver·midnight, `title?`, `caption?`, `pushIn` (dive into the laptop screen at the end, laptop only) |
+| `assemble` | 5 | `media`, `pieces[] {x,y,w,h}` (widget rectangles, fractions; ≤ 8), `mode` assemble·explode, `aspect?`, `title?`, `caption?` |
+| `carousel3d` | 6 | `items[] {media, label?}` (time split evenly; each comes to the front), `title?`, `aspect=16/10` |
 | `cta` | 4 | `headline`, `subline?`, `button="Try it now"`, `url?` (falls back to `brand.url`), `showLogo=true` |
 
 ### screen: camera, callouts, cursor
@@ -56,6 +60,23 @@ Files are names inside the trailer's `public/` folder.
   key just before a click so the pointer settles first.
 - For video `media`, the clip plays from its start, so trim it to the scene
   length with `scripts/trim.sh`.
+
+### 3D scenes
+
+3D scenes take **images only** (png/jpg/webp); check-spec flags video. They
+draw procedural models (no model files), lit with the theme's accent colours.
+
+- **`device3d` motions:** `spin` turns more than once into a three-quarter view (hero
+  moment), `open` turns a closed laptop towards you and opens the lid (pair it with
+  `pushIn: true`, then a `screen` scene with the same media so the cut is
+  seamless), `orbit` is a slow sweep, `rise` comes up from below, `float` is idle
+  bobbing (good for `duo`).
+- **`assemble`:** draw `pieces` around the screenshot's widgets (cards, panels,
+  sidebar) with `grid.mjs`, the same way as callouts. `assemble` scatters
+  them in 3D, snaps them into their slots with a glow, then turns the screen
+  flat. `explode` does the reverse: it tilts the screen and lifts the pieces
+  into floating layers. Use 3–6 pieces that don't overlap.
+- **`carousel3d`:** cover-flow with reflections, for breadth ("and much more").
 
 ## Timing tips
 

@@ -3,7 +3,9 @@
 A framework for **product launch trailers** and **feature launch trailers**.
 You describe the trailer as a list of scenes in one JSON file, and the kit
 renders it to MP4/GIF in 16:9, 1:1 and 9:16. It's built on
-[Remotion](https://www.remotion.dev) and includes reusable scenes,
+[Remotion](https://www.remotion.dev) and three.js. It includes 3D laptop
+and phone models with your screenshots on them, UI that assembles itself from
+its widgets, and reusable scenes,
 components, scripts and an agent skill. It is meant to be consumed as a
 **git submodule**.
 
@@ -14,11 +16,16 @@ framework/src/
 ├── Root.tsx           compositions: Trailer (used by scripts), Templates/*
 ├── theme.tsx          theme tokens, fonts, layout unit (works in every format)
 ├── motion.ts          springs, rise/pop, keyframes
+├── three/             3D kit: Stage3D, CameraRig, Laptop, Phone, AppIcon,
+│                      textures (rounded/cropped planes, loaders)
 ├── components/        Background, Stage, KineticText, RiseText, Pill, Logo,
 │                      Button, Counter, KeyCaps, FeatureCard, DeviceFrame,
 │                      Media, ZoomPan, Callout, Cursor
 ├── scenes/            hook, problem, logo, announce, screen, montage, keys,
-│                      features, stat, beforeAfter, quote, cta
+│                      features, stat, beforeAfter, quote, cta, and in 3D:
+│                      logo3d, device3d (laptop/phone/duo: spin, open +
+│                      push-in, orbit, rise, float), assemble (widgets fly
+│                      into place / explode into layers), carousel3d
 └── lib.ts             public API for custom compositions
 templates/
 ├── product/           30s product-launch recipe (trailer.json + public/)

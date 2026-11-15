@@ -38,7 +38,7 @@ Output goes to `<dir>/out/` (gitignored).
    (1440×900 @2x), 9:19.5 for phone. For a different aspect, set `aspect`
    on the scene.
 4. **Spec**: edit `trailer.json` (reference: `references/spec.md`). For
-   `zoom`, `callouts` and `cursor`, run `grid.mjs` on the screenshot, look at
+   `zoom`, `callouts`, `cursor` and `assemble` pieces, run `grid.mjs` on the screenshot, look at
    the image and read off the fractions. Don't guess them.
 5. **Check**: run `check-spec.mjs` until it passes, then render a few stills
    and look at them before doing a full render:
@@ -51,14 +51,28 @@ Output goes to `<dir>/out/` (gitignored).
 ## Recipes
 
 **Product launch (30–60s, introduce the whole product)**
-`hook` → `problem` → `logo` → `screen` ×2–3 (the core loop, real UI) →
-`keys` or `stat` or `quote` (one proof) → `features` (3–6) → `montage`
-(optional breadth) → `cta`.
+`hook` → `problem` → `logo3d` → `device3d` spin (hero) → `assemble`
+(the main screen builds itself) → `screen` ×1–2 (the core loop, with cursor
+and callouts) → `keys`/`stat`/`quote` (one proof) → `device3d` duo (every
+device) → `features` → `carousel3d` (breadth) → `cta`.
 
 **Feature launch (15–30s, one feature, existing users)**
-`announce` (badge "New in vX") → `beforeAfter` (the pain it removes) →
-`screen` with `cursor` + `callouts` (the feature being used, one flow) →
-`keys` (if it has a shortcut) → `cta` ("Update" / "Try it now").
+`announce` (badge "New in vX") → `device3d` open + `pushIn` → `screen`
+with the same media plus `cursor` + `callouts` (the feature in use; the
+push-in cuts straight into it) → `assemble` explode (what it's made of) →
+`beforeAfter` → `keys` → `cta`.
+
+**Make it hit (the dopamine rules)**
+- Something moves in 3D at least every ~8s: alternate a 3D scene with a 2D
+  one, so depth changes keep the eye busy without wearing it out.
+- Open on motion, not a logo: a `hook`, or a `device3d` spin straight away.
+- Keep each scene to 2.5–4s (5s at most). Cut faster towards the end
+  (`carousel3d` with short items), then hold the CTA for 4s.
+- Use the payoff pairs: `device3d open + pushIn` into `screen`, or `assemble`
+  ending flat into a `screen` with the same media. Matching media makes the
+  cut feel like one continuous shot.
+- Set music with a clear beat (`music.src`). Scene lengths of 60/BPM × n
+  land the cuts on the beat (120 BPM means multiples of 0.5s).
 
 Templates with both recipes: `$KIT/templates/{product,feature}/trailer.json`.
 

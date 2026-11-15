@@ -2,6 +2,7 @@
 // from here when a trailer needs something the spec cannot express.
 export * from './components';
 export * from './scenes';
+export * from './three';
 export * from './motion';
 export * from './theme';
 export type * from './spec';

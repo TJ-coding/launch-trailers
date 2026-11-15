@@ -60,6 +60,28 @@ export type BeforeAfterScene = Base & {
   aspect?: number;
 };
 export type QuoteScene = Base & {type: 'quote'; text: string; author?: string; role?: string};
+export type Device3DScene = Base & {
+  type: 'device3d';
+  device?: 'laptop' | 'phone' | 'duo';
+  media?: string; // laptop screen (or phone screen when device = phone)
+  phoneMedia?: string; // phone screen in duo
+  motion?: 'spin' | 'open' | 'orbit' | 'rise' | 'float';
+  color?: 'space' | 'silver' | 'midnight';
+  title?: string;
+  caption?: string;
+  pushIn?: boolean; // dive into the laptop screen at the end
+};
+export type AssembleScene = Base & {
+  type: 'assemble';
+  media?: string;
+  aspect?: number;
+  mode?: 'assemble' | 'explode';
+  pieces: {x: number; y: number; w: number; h: number}[];
+  title?: string;
+  caption?: string;
+};
+export type Carousel3DScene = Base & {type: 'carousel3d'; items: {media?: string; label?: string}[]; title?: string; aspect?: number};
+export type Logo3DScene = Base & {type: 'logo3d'; tagline?: string};
 export type CtaScene = Base & {type: 'cta'; headline: string; subline?: string; button?: string; url?: string; showLogo?: boolean};
 
 export type Scene =
@@ -74,7 +96,11 @@ export type Scene =
   | StatScene
   | BeforeAfterScene
   | QuoteScene
-  | CtaScene;
+  | CtaScene
+  | Device3DScene
+  | AssembleScene
+  | Carousel3DScene
+  | Logo3DScene;
 
 export type SceneType = Scene['type'];
 
@@ -105,6 +131,10 @@ export const DEFAULT_DURATION: Record<SceneType, number> = {
   beforeAfter: 5,
   quote: 4,
   cta: 4,
+  device3d: 5,
+  assemble: 5,
+  carousel3d: 6,
+  logo3d: 3,
 };
 
 export const FORMATS: Record<Format, {width: number; height: number}> = {
