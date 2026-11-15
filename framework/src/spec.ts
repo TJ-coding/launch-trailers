@@ -100,13 +100,19 @@ export type CtaScene = Base & {type: 'cta'; headline: string; subline?: string; 
 
 export type Corners = [[number, number], [number, number], [number, number], [number, number]];
 export type Overlay = {
-  kind: 'notification' | 'bubble' | 'toast' | 'chip';
+  kind: 'notification' | 'bubble' | 'toast' | 'chip' | 'widget';
+  // widget: a component of the product at work, cropped from a recording
+  media?: string;
+  crop?: [number, number, number, number];
+  mediaAspect?: number;
+  startFrom?: number;
+  playbackRate?: number;
   at?: number;
   until?: number;
   pos?: [number, number]; // top-left of the overlay, fractions of the frame
   app?: string;
   title?: string;
-  text: string;
+  text?: string;
   time?: string;
   from?: string; // bubble speaker
   speak?: boolean; // bubble: light words up progressively

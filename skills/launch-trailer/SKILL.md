@@ -66,7 +66,15 @@ feature list:
 
 ## Recipes
 
-Default to **components at work**. Keep it concise (around 20s). Use **scenario** only with
+**Best: context + components** (the owner's pick). Each scene is a `moment`: the
+target user in their real setting (lit photo), with **one live `widget` overlay**
+(a cropped recording of the component that solves that moment) floating on
+the empty side, and a 3–5-word serif headline. Open with one `mood: "problem"`
+moment: a dark photo, notifications piling up, no widget. About 20s:
+problem → 4 moments → `cta` with a lit `photo`. Example:
+`life-console/trailers/life-console-context`.
+
+Without suitable photos, fall back to **components at work**. Keep it concise (around 20s). Use **scenario** only with
 photos that genuinely show the target viewer's own setting (the owner rejected
 generic stock scenes).
 

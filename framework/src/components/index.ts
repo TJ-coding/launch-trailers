@@ -16,3 +16,4 @@ export * from './Headline';
 export * from './Overlays';
 export * from './quad';
 export * from './useImageSize';
+export * from './WidgetCard';

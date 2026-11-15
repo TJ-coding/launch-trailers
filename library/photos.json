@@ -128,6 +128,34 @@
       "height": 1600
     },
     {
+      "id": "pexels-35542602",
+      "source": "pexels",
+      "sourceId": "35542602",
+      "page": "https://www.pexels.com/photo/35542602/",
+      "download": "https://images.pexels.com/photos/35542602/pexels-photo-35542602.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Businessman at his office desk at night, hands on face, city lights behind: overwhelmed",
+      "tags": [
+        "overwhelmed",
+        "stress",
+        "night",
+        "dark",
+        "office",
+        "problem"
+      ],
+      "personas": [
+        "hyper-optimizer",
+        "founder"
+      ],
+      "time": "night",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1340
+    },
+    {
       "id": "pexels-35719571",
       "source": "pexels",
       "sourceId": "35719571",
@@ -477,6 +505,35 @@
           ]
         }
       ],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-6615223",
+      "source": "pexels",
+      "sourceId": "6615223",
+      "page": "https://www.pexels.com/photo/6615223/",
+      "download": "https://images.pexels.com/photos/6615223/pexels-photo-6615223.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Man alone at a desk in a dim loft at night, head in hands under a desk lamp",
+      "tags": [
+        "overwhelmed",
+        "stress",
+        "night",
+        "dark",
+        "home",
+        "problem"
+      ],
+      "personas": [
+        "hyper-optimizer",
+        "student",
+        "phd"
+      ],
+      "time": "night",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
       "width": 2400,
       "height": 1600
     },

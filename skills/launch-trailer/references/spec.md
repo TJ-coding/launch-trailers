@@ -49,13 +49,17 @@ Files are names inside the trailer's `public/` folder.
 "overlays": [{"kind": "notification", "at": 1.5, "pos": [0.64, 0.42], "title": "Team sync", "text": "Starts in 10 min."},
              {"kind": "bubble", "from": "You", "text": "Can you push my gym session to 5?", "at": 2.0},
              {"kind": "toast", "text": "Gym moved to 5:00 PM", "at": 3.0},
-             {"kind": "chip", "text": "calendar.move {\"to\": \"17:00\"}", "at": 3.2}]
+             {"kind": "chip", "text": "calendar.move {\"to\": \"17:00\"}", "at": 3.2},
+             {"kind": "widget", "media": "quickadd.mp4", "crop": [0.335, 0.055, 0.66, 0.29], "startFrom": 1.2, "playbackRate": 1.75, "at": 0.5, "pos": [0.4, 0.42], "width": 1060}]
 ```
 
 - `corners`: the screen's quad in the **photo** as fractions, in the order TL, TR, BR,
   BL. The screenshot is warped onto it with a projective transform, moves
   with the camera, and powers on at `at`. `radius` is a fraction of the screen
   width (phones ≈ 0.09).
+- A `widget` overlay is one product component at work: a crop of a recording
+  (same fields as the `widget` scene), floating as a card `width` px wide (at
+  1080p). Put it on the empty side of the photo, never over faces.
 - `overlays` sit on the **frame** (not the photo); `pos` is their top-left as
   frame fractions. A `bubble` lights its words up as if spoken (`speak: false`
   shows it all at once). `notification` takes `app` (default brand name),

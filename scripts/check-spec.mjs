@@ -123,8 +123,9 @@ const rows = [];
         err(`${where} screens[${j}]: corners must be 4 [x, y] fractions: top-left, top-right, bottom-right, bottom-left`);
     });
     (s.overlays ?? []).forEach((o, j) => {
-      if (!['notification', 'bubble', 'toast', 'chip'].includes(o.kind)) err(`${where} overlays[${j}]: kind must be notification, bubble, toast or chip`);
-      if (!o.text) err(`${where} overlays[${j}]: text is required`);
+      if (!['notification', 'bubble', 'toast', 'chip', 'widget'].includes(o.kind)) err(`${where} overlays[${j}]: kind must be notification, bubble, toast, chip or widget`);
+      if (o.kind === 'widget') media(`${where} overlays[${j}]`, o.media, true);
+      else if (!o.text) err(`${where} overlays[${j}]: text is required`);
       within(`${where} overlays[${j}]`, o.at, dur);
     });
     if (s.headline && s.headline.replace(/\*/g, '').split(/\s+/).length > 8) warn(`${where}: headline over 8 words`);

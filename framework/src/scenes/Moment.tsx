@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Easing, Img, interpolate, OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {Bubble, Chip, hasFile, Headline, Media, Notification, quadMatrix, TimeStamp, Toast, useImageSize} from '../components';
+import {Bubble, Chip, hasFile, Headline, Media, WidgetCard, Notification, quadMatrix, TimeStamp, Toast, useImageSize} from '../components';
 import {alpha, useLayout, useTheme} from '../theme';
 import type {MomentScene, Overlay} from '../spec';
 
@@ -97,24 +97,28 @@ export const Moment: React.FC<MomentScene & {duration?: number}> = ({
         {chip && <Chip text={chip} tone={tone} at={0.9} />}
       </AbsoluteFill>
       {overlays.map((o, i) => (
-        <OverlayAt key={i} o={o} W={W} H={H} />
+        <OverlayAt key={i} o={o} W={W} H={H} duration={duration} />
       ))}
       <AbsoluteFill style={{boxShadow: `inset 0 0 ${200 * u}px ${alpha('#000000', 0.35)}`, pointerEvents: 'none'}} />
     </AbsoluteFill>
   );
 };
 
-const DEFAULT_POS: Record<Overlay['kind'], [number, number]> = {notification: [0.6, 0.08], bubble: [0.62, 0.4], toast: [0.62, 0.78], chip: [0.06, 0.86]};
+const DEFAULT_POS: Record<Overlay['kind'], [number, number]> = {notification: [0.6, 0.08], bubble: [0.62, 0.4], toast: [0.62, 0.78], chip: [0.06, 0.86], widget: [0.5, 0.3]};
 
-const OverlayAt: React.FC<{o: Overlay; W: number; H: number}> = ({o, W, H}) => {
+const OverlayAt: React.FC<{o: Overlay; W: number; H: number; duration: number}> = ({o, W, H, duration}) => {
+  const {u} = useLayout();
   const [x, y] = o.pos ?? DEFAULT_POS[o.kind];
   const box: React.CSSProperties = {position: 'absolute', left: x * W, top: y * H};
   return (
     <div style={box}>
-      {o.kind === 'notification' && <Notification app={o.app} title={o.title} text={o.text} time={o.time} at={o.at} until={o.until} width={o.width} />}
-      {o.kind === 'bubble' && <Bubble from={o.from} text={o.text} at={o.at} until={o.until} speak={o.speak} width={o.width} />}
-      {o.kind === 'toast' && <Toast text={o.text} at={o.at} until={o.until} />}
-      {o.kind === 'chip' && <Chip text={o.text} at={o.at} until={o.until} />}
+      {o.kind === 'notification' && <Notification app={o.app} title={o.title} text={o.text ?? ''} time={o.time} at={o.at} until={o.until} width={o.width} />}
+      {o.kind === 'bubble' && <Bubble from={o.from} text={o.text ?? ''} at={o.at} until={o.until} speak={o.speak} width={o.width} />}
+      {o.kind === 'toast' && <Toast text={o.text ?? ''} at={o.at} until={o.until} />}
+      {o.kind === 'chip' && <Chip text={o.text ?? ''} at={o.at} until={o.until} />}
+      {o.kind === 'widget' && (
+        <WidgetCard media={o.media} crop={o.crop} mediaAspect={o.mediaAspect} startFrom={o.startFrom} playbackRate={o.playbackRate} width={(o.width ?? 900) * u} at={o.at ?? 0.6} duration={duration} glass />
+      )}
     </div>
   );
 };
