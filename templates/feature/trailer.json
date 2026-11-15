@@ -1,0 +1,26 @@
+{
+  "type": "feature",
+  "title": "Acme: Focus mode",
+  "format": "landscape",
+  "fps": 30,
+  "theme": {"accent": "#7CF29C", "accent2": "#5AD1FF", "font": "Inter", "background": "dots"},
+  "brand": {"name": "Acme", "logo": "logo.png", "url": "acme.dev"},
+  "music": {"src": "music.mp3", "volume": 0.6},
+  "scenes": [
+    {"type": "announce", "duration": 3, "badge": "New in v2.4", "title": "Focus mode", "subtitle": "One task. Nothing else."},
+    {"type": "beforeAfter", "duration": 5, "title": "Less noise, more done", "before": {"label": "Before", "items": ["Twelve tabs open", "Notifications everywhere"]}, "after": {"label": "After", "items": ["Just the task at hand", "A timer that keeps you honest"]}},
+    {
+      "type": "screen",
+      "duration": 6,
+      "media": "feature.png",
+      "frame": "browser",
+      "url": "acme.dev/#/focus",
+      "title": "Start it from any task",
+      "zoom": [{"at": 0.6, "x": 0.5, "y": 0.5, "scale": 1}, {"at": 2.2, "x": 0.7, "y": 0.3, "scale": 1.7}, {"at": 4.6, "x": 0.7, "y": 0.3, "scale": 1.7}, {"at": 5.6, "x": 0.5, "y": 0.5, "scale": 1}],
+      "callouts": [{"x": 0.62, "y": 0.22, "w": 0.18, "h": 0.12, "label": "One click", "at": 2.4, "until": 4.6}],
+      "cursor": [{"at": 1.0, "x": 0.4, "y": 0.6}, {"at": 2.3, "x": 0.71, "y": 0.28}, {"at": 2.6, "x": 0.71, "y": 0.28, "click": true}]
+    },
+    {"type": "keys", "duration": 3, "keys": ["F"], "label": "Or just press F"},
+    {"type": "cta", "duration": 4, "headline": "Focus mode is live", "subline": "Update to v2.4 or open the app.", "button": "Try it now"}
+  ]
+}

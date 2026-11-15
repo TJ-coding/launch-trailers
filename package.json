@@ -1,0 +1,24 @@
+{
+  "name": "launch-trailers",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Spec-driven product and feature launch trailers (Remotion): reusable scenes, components, scripts and an agent skill.",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio framework/src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/check-spec.mjs templates/product && node scripts/check-spec.mjs templates/feature && tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.539",
+    "@remotion/google-fonts": "4.0.539",
+    "@remotion/transitions": "4.0.539",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.539"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
