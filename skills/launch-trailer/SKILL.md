@@ -149,6 +149,9 @@ trailer starts from the library. Keys live in
 
 ## Rules of thumb
 
+- **Problems are dark; the solution brings light.** Set `mood: "problem"` on
+  problem scenes. check-spec rejects bright photos on them.
+- **Concise.** About 20s, 3–5 words per title, one component per scene.
 - **One idea per scene.** Keep on-screen text to 8 words or fewer. The
   viewer gets about 3s per line.
 - **Show the real product.** Real UI beats feature cards: use `screen`

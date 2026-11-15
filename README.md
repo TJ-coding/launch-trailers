@@ -23,7 +23,8 @@ framework/src/
 │                      Button, Counter, KeyCaps, FeatureCard, DeviceFrame,
 │                      Media, ZoomPan, Callout, Cursor
 ├── scenes/            hook, problem, logo, announce, screen, montage, keys,
-│                      features, stat, beforeAfter, quote, cta, moment
+│                      features, stat, beforeAfter, quote, cta, widget (one component
+│                      cropped from a recording, at work), moment
 │                      (context photo + UI on its screen + overlays); opt-in 3D:
 │                      logo3d, device3d (laptop/phone/duo: spin, open +
 │                      push-in, orbit, rise, float), assemble (widgets fly
