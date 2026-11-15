@@ -34,7 +34,10 @@ templates/
 ├── feature/           20s feature-launch recipe
 ├── scenario/          25s day-in-the-life recipe (moments + cta)
 └── storyboard.md      the plan you fill in first
-scripts/               new-trailer, check-spec, studio, render, capture, grid, trim
+library/photos.json    reusable photo library: source, credit, tags, personas,
+                       measured screen corners (files cached, not committed)
+scripts/               new-trailer, check-spec, studio, render, capture, grid,
+                       trim, library (search/add/corners/sheet/use)
 skills/launch-trailer/ SKILL.md + references/ (spec, components)
 ```
 

@@ -1,0 +1,591 @@
+{
+  "photos": [
+    {
+      "id": "pexels-12470765",
+      "source": "pexels",
+      "sourceId": "12470765",
+      "page": "https://www.pexels.com/photo/12470765/",
+      "download": "https://images.pexels.com/photos/12470765/pexels-photo-12470765.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Dark home desk: large monitor facing camera, mechanical keyboard, laptop closed, moody light",
+      "tags": [
+        "desk",
+        "monitor",
+        "keyboard",
+        "deep-work",
+        "home-office"
+      ],
+      "personas": [
+        "phd",
+        "developer",
+        "founder"
+      ],
+      "time": "morning",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [
+        {
+          "device": "monitor",
+          "corners": [
+            [
+              0.286,
+              0.246
+            ],
+            [
+              0.627,
+              0.268
+            ],
+            [
+              0.627,
+              0.614
+            ],
+            [
+              0.293,
+              0.605
+            ]
+          ]
+        }
+      ],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-1350462",
+      "source": "pexels",
+      "sourceId": "1350462",
+      "page": "https://www.pexels.com/photo/1350462/",
+      "download": "https://images.pexels.com/photos/1350462/pexels-photo-1350462.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Phone lying on a dark wooden table, low evening light, shallow focus",
+      "tags": [
+        "phone",
+        "table",
+        "night",
+        "moody"
+      ],
+      "personas": [
+        "general"
+      ],
+      "time": "night",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-16323455",
+      "source": "pexels",
+      "sourceId": "16323455",
+      "page": "https://www.pexels.com/photo/16323455/",
+      "download": "https://images.pexels.com/photos/16323455/pexels-photo-16323455.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Man working on a laptop at a teal desk, dark dashboard UI visible on the screen at an angle",
+      "tags": [
+        "focus",
+        "laptop",
+        "screen-visible",
+        "office"
+      ],
+      "personas": [
+        "developer",
+        "general"
+      ],
+      "time": "day",
+      "tone": "dark",
+      "headline": "top-right",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-20432893",
+      "source": "pexels",
+      "sourceId": "20432893",
+      "page": "https://www.pexels.com/photo/20432893/",
+      "download": "https://images.pexels.com/photos/20432893/pexels-photo-20432893.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Open laptop on a classroom desk, screen facing camera, other laptops around",
+      "tags": [
+        "classroom",
+        "lecture",
+        "laptop",
+        "university"
+      ],
+      "personas": [
+        "student",
+        "phd"
+      ],
+      "time": "midday",
+      "tone": "dark",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-35719571",
+      "source": "pexels",
+      "sourceId": "35719571",
+      "page": "https://www.pexels.com/photo/35719571/",
+      "download": "https://images.pexels.com/photos/35719571/pexels-photo-35719571.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Hand ticking items off a notebook checklist that ends in DONE, dark moody light",
+      "tags": [
+        "checklist",
+        "progress",
+        "done",
+        "small-steps",
+        "close-up"
+      ],
+      "personas": [
+        "hyper-optimizer",
+        "general"
+      ],
+      "time": "evening",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1350
+    },
+    {
+      "id": "pexels-36713018",
+      "source": "pexels",
+      "sourceId": "36713018",
+      "page": "https://www.pexels.com/photo/36713018/",
+      "download": "https://images.pexels.com/photos/36713018/pexels-photo-36713018.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Young man rubbing his face at a laptop in an office: stressed",
+      "tags": [
+        "overwhelmed",
+        "stress",
+        "laptop",
+        "office"
+      ],
+      "personas": [
+        "hyper-optimizer"
+      ],
+      "time": "day",
+      "tone": "dark",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1350
+    },
+    {
+      "id": "pexels-3807633",
+      "source": "pexels",
+      "sourceId": "3807633",
+      "page": "https://www.pexels.com/photo/3807633/",
+      "download": "https://images.pexels.com/photos/3807633/pexels-photo-3807633.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Woman waking in a bright white bed, looking at her phone",
+      "tags": [
+        "bedroom",
+        "morning",
+        "phone",
+        "wake-up"
+      ],
+      "personas": [
+        "general"
+      ],
+      "time": "morning",
+      "tone": "dark",
+      "headline": "bottom-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-4226215",
+      "source": "pexels",
+      "sourceId": "4226215",
+      "page": "https://www.pexels.com/photo/4226215/",
+      "download": "https://images.pexels.com/photos/4226215/pexels-photo-4226215.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Woman with hands over her face in front of a MacBook, white desk: overwhelmed",
+      "tags": [
+        "overwhelmed",
+        "stress",
+        "laptop"
+      ],
+      "personas": [
+        "hyper-optimizer"
+      ],
+      "time": "day",
+      "tone": "dark",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-4238511",
+      "source": "pexels",
+      "sourceId": "4238511",
+      "page": "https://www.pexels.com/photo/4238511/",
+      "download": "https://images.pexels.com/photos/4238511/pexels-photo-4238511.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Hand writing a to-do list in a notebook, yellow sleeve",
+      "tags": [
+        "checklist",
+        "planning",
+        "notebook",
+        "close-up"
+      ],
+      "personas": [
+        "general"
+      ],
+      "time": "day",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-5155218",
+      "source": "pexels",
+      "sourceId": "5155218",
+      "page": "https://www.pexels.com/photo/5155218/",
+      "download": "https://images.pexels.com/photos/5155218/pexels-photo-5155218.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Sunlit home office by big windows: monitor at an angle, laptop, water carafe",
+      "tags": [
+        "desk",
+        "monitor",
+        "home-office",
+        "sunlight"
+      ],
+      "personas": [
+        "general",
+        "developer"
+      ],
+      "time": "morning",
+      "tone": "dark",
+      "headline": "top-left",
+      "screens": [
+        {
+          "device": "monitor",
+          "corners": [
+            [
+              0.684,
+              0.298
+            ],
+            [
+              0.955,
+              0.261
+            ],
+            [
+              0.922,
+              0.647
+            ],
+            [
+              0.656,
+              0.6
+            ]
+          ]
+        }
+      ],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-5198249",
+      "source": "pexels",
+      "sourceId": "5198249",
+      "page": "https://www.pexels.com/photo/5198249/",
+      "download": "https://images.pexels.com/photos/5198249/pexels-photo-5198249.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Man working calmly at a laptop at night under a desk lamp, brick wall kitchen",
+      "tags": [
+        "night",
+        "focus",
+        "laptop",
+        "calm",
+        "consistency",
+        "home"
+      ],
+      "personas": [
+        "hyper-optimizer",
+        "developer",
+        "founder"
+      ],
+      "time": "night",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-5717778",
+      "source": "pexels",
+      "sourceId": "5717778",
+      "page": "https://www.pexels.com/photo/5717778/",
+      "download": "https://images.pexels.com/photos/5717778/pexels-photo-5717778.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Man at a desk with head in hands, laptop, papers and charts spread out: overloaded",
+      "tags": [
+        "overwhelmed",
+        "stress",
+        "desk",
+        "laptop",
+        "papers",
+        "overload"
+      ],
+      "personas": [
+        "hyper-optimizer",
+        "founder",
+        "phd"
+      ],
+      "time": "day",
+      "tone": "dark",
+      "headline": "bottom-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-6278751",
+      "source": "pexels",
+      "sourceId": "6278751",
+      "page": "https://www.pexels.com/photo/6278751/",
+      "download": "https://images.pexels.com/photos/6278751/pexels-photo-6278751.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Laptop with a blank white screen beside a cup of coffee, cafe or lounge windows behind",
+      "tags": [
+        "laptop",
+        "coffee",
+        "cafe",
+        "blank-screen"
+      ],
+      "personas": [
+        "general"
+      ],
+      "time": "midday",
+      "tone": "dark",
+      "headline": "top-right",
+      "screens": [
+        {
+          "device": "laptop",
+          "corners": [
+            [
+              0.067,
+              0.169
+            ],
+            [
+              0.514,
+              0.2
+            ],
+            [
+              0.528,
+              0.678
+            ],
+            [
+              0.075,
+              0.714
+            ]
+          ]
+        }
+      ],
+      "width": 2400,
+      "height": 1350
+    },
+    {
+      "id": "pexels-6285280",
+      "source": "pexels",
+      "sourceId": "6285280",
+      "page": "https://www.pexels.com/photo/6285280/",
+      "download": "https://images.pexels.com/photos/6285280/pexels-photo-6285280.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Man covering his face with both hands at a desk, laptop, open books, headphones: burnt out",
+      "tags": [
+        "overwhelmed",
+        "stress",
+        "burnout",
+        "desk",
+        "laptop"
+      ],
+      "personas": [
+        "hyper-optimizer",
+        "student"
+      ],
+      "time": "day",
+      "tone": "dark",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-6373088",
+      "source": "pexels",
+      "sourceId": "6373088",
+      "page": "https://www.pexels.com/photo/6373088/",
+      "download": "https://images.pexels.com/photos/6373088/pexels-photo-6373088.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Hand holding a phone with a blank white screen against dark green velvet",
+      "tags": [
+        "phone",
+        "hand",
+        "blank-screen",
+        "mockup"
+      ],
+      "personas": [
+        "general"
+      ],
+      "time": "any",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [
+        {
+          "device": "phone",
+          "corners": [
+            [
+              0.486,
+              0.18
+            ],
+            [
+              0.661,
+              0.265
+            ],
+            [
+              0.532,
+              0.808
+            ],
+            [
+              0.36,
+              0.705
+            ]
+          ]
+        }
+      ],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-6913193",
+      "source": "pexels",
+      "sourceId": "6913193",
+      "page": "https://www.pexels.com/photo/6913193/",
+      "download": "https://images.pexels.com/photos/6913193/pexels-photo-6913193.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Young startup team gathered around a laptop in front of a blackboard of notes",
+      "tags": [
+        "startup",
+        "team",
+        "meeting",
+        "laptop",
+        "office"
+      ],
+      "personas": [
+        "founder"
+      ],
+      "time": "afternoon",
+      "tone": "dark",
+      "headline": "bottom-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-6940872",
+      "source": "pexels",
+      "sourceId": "6940872",
+      "page": "https://www.pexels.com/photo/6940872/",
+      "download": "https://images.pexels.com/photos/6940872/pexels-photo-6940872.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Woman in bed at night looking at her phone, sunrise lamp glowing on the nightstand",
+      "tags": [
+        "bedroom",
+        "night",
+        "phone",
+        "wind-down"
+      ],
+      "personas": [
+        "student",
+        "phd",
+        "founder"
+      ],
+      "time": "night",
+      "tone": "light",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-7241260",
+      "source": "pexels",
+      "sourceId": "7241260",
+      "page": "https://www.pexels.com/photo/7241260/",
+      "download": "https://images.pexels.com/photos/7241260/pexels-photo-7241260.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Young man in a student bedroom reaching for his phone on the windowsill after waking",
+      "tags": [
+        "bedroom",
+        "morning",
+        "phone",
+        "wake-up"
+      ],
+      "personas": [
+        "student",
+        "phd",
+        "founder"
+      ],
+      "time": "morning",
+      "tone": "dark",
+      "headline": "bottom-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    },
+    {
+      "id": "pexels-7972550",
+      "source": "pexels",
+      "sourceId": "7972550",
+      "page": "https://www.pexels.com/photo/7972550/",
+      "download": "https://images.pexels.com/photos/7972550/pexels-photo-7972550.jpeg?auto=compress&cs=tinysrgb&w=2400",
+      "license": "Pexels License (free, commercial use, no attribution required)",
+      "author": "",
+      "scene": "Student with backpack sitting outside a university building, checking his phone, bike in front",
+      "tags": [
+        "campus",
+        "phone",
+        "outdoors",
+        "university",
+        "between-classes"
+      ],
+      "personas": [
+        "student",
+        "phd"
+      ],
+      "time": "afternoon",
+      "tone": "dark",
+      "headline": "top-left",
+      "screens": [],
+      "width": 2400,
+      "height": 1600
+    }
+  ]
+}

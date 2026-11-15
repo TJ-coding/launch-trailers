@@ -20,9 +20,15 @@ const glass = (u: number): React.CSSProperties => ({
   color: '#FFFFFF',
 });
 
-const AppIconSmall: React.FC<{size: number}> = ({size}) => {
+const AppIconSmall: React.FC<{size: number; app?: string}> = ({size, app}) => {
   const brand = useBrand();
   const theme = useTheme();
+  if (app && app !== brand.name)
+    return (
+      <div style={{width: size, height: size, borderRadius: size * 0.24, background: 'rgba(255,255,255,0.22)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: size * 0.55, fontWeight: 700, textTransform: 'uppercase'}}>
+        {app.slice(0, 1)}
+      </div>
+    );
   return brand.logo && hasFile(brand.logo) ? (
     <Img src={staticFile(brand.logo)} style={{width: size, height: size, borderRadius: size * 0.24, objectFit: 'cover'}} />
   ) : (
@@ -48,7 +54,7 @@ export const Notification: React.FC<{app?: string; title?: string; text: string;
   return (
     <div style={{...glass(u), width: width * u, borderRadius: 30 * u, padding: `${22 * u}px ${26 * u}px`, fontFamily: theme.fontFamily, opacity: o, transform: `translateY(${(1 - p) * -40 * u}px) scale(${0.96 + 0.04 * p})`}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 12 * u, fontSize: 22 * u, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.04em'}}>
-        <AppIconSmall size={34 * u} />
+        <AppIconSmall size={34 * u} app={app} />
         <span style={{flex: 1}}>{app ?? brand.name}</span>
         <span style={{textTransform: 'none'}}>{time}</span>
       </div>

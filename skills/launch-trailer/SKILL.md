@@ -48,6 +48,22 @@ Output goes to `<dir>/out/` (gitignored).
    run `render.sh <dir> all --gif --poster --strict`. Report the paths in
    `out/`.
 
+## Who is it for? (decide before any photo)
+
+Write the target viewer and their pain in one line in `storyboard.md`, from
+the product's own docs, landing page or owner. For example: "hyper-optimizers
+overloaded with tasks and deadlines who feel their life isn't making
+consistent progress". Every photo must show **that person in their real
+setting**: their desk, their campus, their late night. A generic "person
+with laptop" isn't enough. Then tell the story as their arc, not as a
+feature list:
+
+1. **Pain:** the moment they live now, e.g. notifications piling up at 23:40.
+2. **Turn:** the product in that same kind of setting, solving it.
+3. **Proof over time:** the small result, then the same again days or weeks
+   later. Time stamps like "Day 2", "Day 12", "Week 6" carry the change.
+4. **CTA.**
+
 ## Recipes
 
 Pick the recipe from what the viewer needs to imagine. **Scenario is the
@@ -77,9 +93,30 @@ helps) → `screen` with `cursor` + `callouts` (the feature in use) →
 `logo3d` exist but are not in any recipe. The procedural models look
 synthetic next to real photos. Use them only when the user asks for 3D.
 
+### Photo library: reuse before you search
+
+`$KIT/scripts/library.mjs` keeps every photo you've used: its source, credit,
+tags, personas, the scene, tone, headline side and **measured screen
+corners**. The metadata is committed in `library/photos.json`; the files are
+cached in `library/cache/` (gitignored, re-downloaded on demand).
+
+```bash
+node $KIT/scripts/library.mjs list [--persona hyper-optimizer] [--tag overwhelmed]
+node $KIT/scripts/library.mjs sheet --persona founder /tmp/s.png   # look before choosing
+node $KIT/scripts/library.mjs use pexels-12470765 pexels-5717778 <trailer-dir>   # copies + CREDITS + moment JSON with corners
+node $KIT/scripts/library.mjs search "student desk at night"       # needs UNSPLASH_ACCESS_KEY or PEXELS_API_KEY
+node $KIT/scripts/library.mjs add pexels:<id> --scene "…" --tags … --personas … --time … --tone … --headline …
+node $KIT/scripts/library.mjs corners <id> monitor "x,y x,y x,y x,y"
+```
+
+Add every new photo you use, with honest tags and personas, so the next
+trailer starts from the library. Keys live in
+`~/.config/launch-trailers/keys.env` (`UNSPLASH_ACCESS_KEY=…`,
+`PEXELS_API_KEY=…`), never in a repo.
+
 ### Making a moment
 
-1. Find a photo: the user's own, AI-generated, or free stock. Pexels photos
+1. Find a photo, library first: the user's own, AI-generated, or free stock. Pexels photos
    are free for commercial use, and Pexels is searchable from the web. A
    direct image URL looks like
    `https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg?w=2400`.
