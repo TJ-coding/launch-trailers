@@ -30,7 +30,20 @@ Helpers: `useEnter(delay, 'soft'|'snappy'|'bouncy')` gives a 0→1 spring,
 Scene helpers: `fitDevice(frame, aspect, boxW, boxH)` and
 `frameHeight(...)` (in `scenes/Screen.tsx`).
 
-## 3D kit (framework/src/three)
+## Scenario kit
+
+| component | props | what it is |
+|---|---|---|
+| `Headline` | `text` (`*accent*`), `size`, `delay`, `tone`, `align`, `maxWidth` | editorial display-font headline; words drift up out of a blur |
+| `Notification` | `app, title, text, time, at, until, width` | glass push notification |
+| `Bubble` | `from, text, at, until, speak, width` | transcript/chat bubble; words light up as spoken |
+| `Toast` | `text, at, until` | ✓ confirmation pill |
+| `Chip` | `text, at, until, tone` | typed-out monospace proof chip |
+| `TimeStamp` | `time, label, tone, at` | "07:30 WAKE UP" |
+| `quadMatrix(w, h, quad)` | | CSS `matrix3d` that warps a w×h box onto a 4-point quad (screen replacement) |
+| `useImageSize(src)` | | natural size of a public/ image (holds the render until known) |
+
+## 3D kit (opt-in; framework/src/three)
 
 | export | what it is |
 |---|---|

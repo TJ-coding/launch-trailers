@@ -14,10 +14,11 @@ if (!dir) {
   process.exit(1);
 }
 
-const DEFAULT_DURATION = {hook: 3, problem: 4, logo: 2.5, announce: 3, screen: 5, montage: 4, keys: 3, features: 5, stat: 3, beforeAfter: 5, quote: 4, cta: 4, device3d: 5, assemble: 5, carousel3d: 6, logo3d: 3};
-const REQUIRED = {hook: ['lines'], problem: ['items'], logo: [], announce: ['title'], screen: [], montage: ['items'], keys: ['keys'], features: ['items'], stat: ['value', 'label'], beforeAfter: ['before', 'after'], quote: ['text'], cta: ['headline'], device3d: [], assemble: ['pieces'], carousel3d: ['items'], logo3d: []};
+const DEFAULT_DURATION = {hook: 3, problem: 4, logo: 2.5, announce: 3, screen: 5, montage: 4, keys: 3, features: 5, stat: 3, beforeAfter: 5, quote: 4, cta: 4, device3d: 5, assemble: 5, carousel3d: 6, logo3d: 3, moment: 4};
+const REQUIRED = {hook: ['lines'], problem: ['items'], logo: [], announce: ['title'], screen: [], montage: ['items'], keys: ['keys'], features: ['items'], stat: ['value', 'label'], beforeAfter: ['before', 'after'], quote: ['text'], cta: ['headline'], device3d: [], assemble: ['pieces'], carousel3d: ['items'], logo3d: [], moment: ['photo']};
 const FORMATS = ['landscape', 'square', 'vertical'];
 const FONTS = ['Inter', 'Poppins', 'Space Grotesk', 'Manrope', 'DM Sans'];
+const DISPLAY_FONTS = [...FONTS, 'Instrument Serif', 'Fraunces', 'Newsreader', 'Playfair Display'];
 const TRANSITIONS = ['fade', 'slide', 'wipe', 'none'];
 const FRAMES = ['browser', 'window', 'phone', 'none'];
 
@@ -44,9 +45,10 @@ const media = (where, f, required = false) => {
 const frac = (where, o, keys) => keys.forEach((k) => typeof o[k] === 'number' && (o[k] < 0 || o[k] > 1) && err(`${where}: ${k}=${o[k]} must be a fraction 0..1`));
 const within = (where, at, dur) => typeof at === 'number' && at > dur && warn(`${where}: at=${at}s is after the scene ends (${dur}s)`);
 
-if (!['product', 'feature'].includes(spec.type)) err(`type must be "product" or "feature"`);
+if (!['product', 'feature', 'scenario'].includes(spec.type)) err(`type must be "product", "feature" or "scenario"`);
 if (spec.format && !FORMATS.includes(spec.format)) err(`format must be one of ${FORMATS.join(', ')}`);
 if (spec.theme?.font && !FONTS.includes(spec.theme.font)) err(`theme.font must be one of ${FONTS.join(', ')}`);
+if (spec.theme?.display && !DISPLAY_FONTS.includes(spec.theme.display)) err(`theme.display must be one of ${DISPLAY_FONTS.join(', ')}`);
 if (spec.transition && !TRANSITIONS.includes(spec.transition)) err(`transition must be one of ${TRANSITIONS.join(', ')}`);
 if (!spec.brand?.name) err('brand.name is required');
 if (spec.brand?.logo && !fs.existsSync(path.join(pub, spec.brand.logo))) warn(`brand.logo: public/${spec.brand.logo} not found (lettermark renders)`);
@@ -103,6 +105,22 @@ const rows = [];
     if ((s.pieces ?? []).length > 8) warn(`${where}: more than 8 pieces gets busy`);
   }
   if (s.type === 'carousel3d') (s.items ?? []).forEach((it, j) => media(`${where} items[${j}]`, it.media, true));
+  if (s.type === 'moment') {
+    if (s.photo) media(where, s.photo, true);
+    if (s.after) media(`${where} after`, s.after);
+    (s.screens ?? []).forEach((sc, j) => {
+      media(`${where} screens[${j}]`, sc.media, true);
+      if (!Array.isArray(sc.corners) || sc.corners.length !== 4 || sc.corners.some((c) => !Array.isArray(c) || c.length !== 2 || c.some((v) => v < 0 || v > 1)))
+        err(`${where} screens[${j}]: corners must be 4 [x, y] fractions: top-left, top-right, bottom-right, bottom-left`);
+    });
+    (s.overlays ?? []).forEach((o, j) => {
+      if (!['notification', 'bubble', 'toast', 'chip'].includes(o.kind)) err(`${where} overlays[${j}]: kind must be notification, bubble, toast or chip`);
+      if (!o.text) err(`${where} overlays[${j}]: text is required`);
+      within(`${where} overlays[${j}]`, o.at, dur);
+    });
+    if (s.headline && s.headline.replace(/\*/g, '').split(/\s+/).length > 8) warn(`${where}: headline over 8 words`);
+  }
+  if (s.type === 'cta' && s.photo) media(`${where} photo`, s.photo);
   if (s.type === 'montage') (s.items ?? []).forEach((it, j) => media(`${where} items[${j}]`, it.media, true));
   if (s.type === 'beforeAfter') ['before', 'after'].forEach((k) => s[k] && media(`${where} ${k}`, s[k].media));
   if (s.type === 'features' && s.items?.length > 6) warn(`${where}: only the first 6 items show`);

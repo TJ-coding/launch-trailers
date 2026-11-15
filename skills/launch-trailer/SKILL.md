@@ -11,7 +11,7 @@ is two levels above this file (`$KIT`; in a consuming repo usually
 `trailers/kit`).
 
 ```bash
-$KIT/scripts/new-trailer.sh product|feature <dir> ["Brand"] [url]   # scaffold
+$KIT/scripts/new-trailer.sh product|feature|scenario <dir> ["Brand"] [url]   # scaffold
 node $KIT/scripts/check-spec.mjs <dir>                              # validate + timeline
 $KIT/scripts/studio.sh <dir>                                        # live preview :3000
 $KIT/scripts/render.sh <dir> [landscape|square|vertical|all] [--gif] [--poster] [--draft] [--strict]
@@ -50,31 +50,55 @@ Output goes to `<dir>/out/` (gitignored).
 
 ## Recipes
 
-**Product launch (30–60s, introduce the whole product)**
-`hook` → `problem` → `logo3d` → `device3d` spin (hero) → `assemble`
-(the main screen builds itself) → `screen` ×1–2 (the core loop, with cursor
-and callouts) → `keys`/`stat`/`quote` (one proof) → `device3d` duo (every
-device) → `features` → `carousel3d` (breadth) → `cta`.
+Pick the recipe from what the viewer needs to imagine. **Scenario is the
+strongest default for a product launch:** ads work when the viewer can picture
+themselves using the product, in their own day and setting.
+
+**Scenario / day in the life (20–35s), `new-trailer.sh scenario`**
+4–6 `moment` scenes, then a `cta` (with `photo`). Each moment is one concrete
+situation: a time stamp, a context photo, the product on the screen in that
+photo (or a notification next to it), a ≤ 6-word serif headline with one
+*accent* word, and an optional mono `chip` as proof. Order the moments through a
+day (morning → work → on the move → evening) or through one task end to end.
+References: Project Glass "One day…", and the Hermes plugin videos (home at
+dusk, then lights, heat, blinds, each a single beat).
+
+**Product launch (30–60s, product tour)**
+`hook` → `problem` → `logo` → `screen` ×2–3 (the core loop, real UI) →
+`keys`/`stat`/`quote` (one proof) → `features` (3–6) → `montage` → `cta`.
+Swap one or two `screen`s for `moment`s to add context.
 
 **Feature launch (15–30s, one feature, existing users)**
-`announce` (badge "New in vX") → `device3d` open + `pushIn` → `screen`
-with the same media plus `cursor` + `callouts` (the feature in use; the
-push-in cuts straight into it) → `assemble` explode (what it's made of) →
+`announce` (badge "New in vX") → `moment` (the situation where the feature
+helps) → `screen` with `cursor` + `callouts` (the feature in use) →
 `beforeAfter` → `keys` → `cta`.
 
-**Make it hit (the dopamine rules)**
-- Something moves in 3D at least every ~8s: alternate a 3D scene with a 2D
-  one, so depth changes keep the eye busy without wearing it out.
-- Open on motion, not a logo: a `hook`, or a `device3d` spin straight away.
-- Keep each scene to 2.5–4s (5s at most). Cut faster towards the end
-  (`carousel3d` with short items), then hold the CTA for 4s.
-- Use the payoff pairs: `device3d open + pushIn` into `screen`, or `assemble`
-  ending flat into a `screen` with the same media. Matching media makes the
-  cut feel like one continuous shot.
-- Set music with a clear beat (`music.src`). Scene lengths of 60/BPM × n
-  land the cuts on the beat (120 BPM means multiples of 0.5s).
+**3D scenes (opt-in only)**: `device3d`, `assemble`, `carousel3d` and
+`logo3d` exist but are not in any recipe. The procedural models look
+synthetic next to real photos. Use them only when the user asks for 3D.
 
-Templates with both recipes: `$KIT/templates/{product,feature}/trailer.json`.
+### Making a moment
+
+1. Find a photo: the user's own, AI-generated, or free stock. Pexels photos
+   are free for commercial use, and Pexels is searchable from the web. A
+   direct image URL looks like
+   `https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg?w=2400`.
+   Pick photos with a visible, unobstructed screen at a moderate angle (a
+   blank or white screen is ideal), one consistent light and colour mood, and
+   empty space on one side for the headline. List each source in the trailer's
+   `CREDITS.md`.
+2. Run `grid.mjs` on the photo with 20 divisions
+   (`node $KIT/scripts/grid.mjs photo.jpg /tmp/g.png 20`), look at it, and
+   read the screen's four corners as fractions: top-left, top-right,
+   bottom-right, bottom-left. These go in `screens[].corners`. Ignore the
+   rounded corners and use where the edges would meet.
+3. Choose `tone`: `dark` (ink text) for bright photos, `light` for dark
+   ones. Put the headline on the empty side, and set `headlineWidth` so it
+   wraps before it reaches the device.
+4. Move the camera towards the screen (`camera.to` at about the screen's centre,
+   scale 1.1–1.3). Bring overlays in at 1–2s, after the headline.
+5. Render a still at the middle of the moment and check that the screen sits
+   exactly in the bezel. Adjust corners in steps of 0.005.
 
 ## Rules of thumb
 

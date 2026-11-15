@@ -3,87 +3,23 @@
   "title": "Acme launch trailer",
   "format": "landscape",
   "fps": 30,
-  "theme": {
-    "accent": "#6E8BFF",
-    "accent2": "#B57CFF",
-    "font": "Inter",
-    "background": "grid"
-  },
-  "brand": {
-    "name": "Acme",
-    "logo": "logo.png",
-    "url": "acme.dev",
-    "tagline": "The calm way to plan your day."
-  },
-  "music": {
-    "src": "music.mp3",
-    "volume": 0.6
-  },
+  "theme": {"accent": "#6E8BFF", "accent2": "#B57CFF", "font": "Inter", "background": "grid"},
+  "brand": {"name": "Acme", "logo": "logo.png", "url": "acme.dev", "tagline": "The calm way to plan your day."},
+  "music": {"src": "music.mp3", "volume": 0.6},
   "scenes": [
+    {"type": "hook", "duration": 3, "lines": ["Your whole day.", "One screen."], "accentWords": ["One"]},
+    {"type": "problem", "duration": 4, "title": "Planning today means", "items": ["Five apps", "Three calendars", "Zero focus"]},
+    {"type": "logo", "duration": 2.5},
     {
-      "type": "hook",
-      "duration": 3,
-      "lines": [
-        "Your whole day.",
-        "One screen."
-      ],
-      "accentWords": [
-        "One"
-      ]
-    },
-    {
-      "type": "problem",
-      "duration": 4,
-      "title": "Planning today means",
-      "items": [
-        "Five apps",
-        "Three calendars",
-        "Zero focus"
-      ]
-    },
-    {
-      "type": "logo3d",
-      "duration": 3
-    },
-    {
-      "type": "device3d",
-      "duration": 4.5,
-      "device": "laptop",
-      "motion": "spin",
-      "media": "screen-1.png",
-      "title": "See what matters now"
-    },
-    {
-      "type": "assemble",
+      "type": "screen",
       "duration": 5,
       "media": "screen-1.png",
-      "title": "Everything in its place",
-      "pieces": [
-        {
-          "x": 0.18,
-          "y": 0.06,
-          "w": 0.8,
-          "h": 0.22
-        },
-        {
-          "x": 0.18,
-          "y": 0.31,
-          "w": 0.28,
-          "h": 0.6
-        },
-        {
-          "x": 0.48,
-          "y": 0.31,
-          "w": 0.5,
-          "h": 0.3
-        },
-        {
-          "x": 0.48,
-          "y": 0.64,
-          "w": 0.5,
-          "h": 0.27
-        }
-      ]
+      "frame": "browser",
+      "url": "acme.dev",
+      "title": "See what matters now",
+      "caption": "Today's blocks, deadlines and next step, at a glance.",
+      "zoom": [{"at": 0.8, "x": 0.5, "y": 0.5, "scale": 1}, {"at": 2.6, "x": 0.3, "y": 0.35, "scale": 1.6}],
+      "callouts": [{"x": 0.2, "y": 0.25, "w": 0.22, "h": 0.18, "label": "Right now", "at": 2.8}]
     },
     {
       "type": "screen",
@@ -93,97 +29,20 @@
       "layout": "left",
       "title": "Plan the week in minutes",
       "caption": "Drag tasks from the backlog onto your days.",
-      "cursor": [
-        {
-          "at": 0.8,
-          "x": 0.15,
-          "y": 0.4
-        },
-        {
-          "at": 1.8,
-          "x": 0.15,
-          "y": 0.4,
-          "click": true
-        },
-        {
-          "at": 3.0,
-          "x": 0.6,
-          "y": 0.5
-        },
-        {
-          "at": 3.3,
-          "x": 0.6,
-          "y": 0.5,
-          "click": true
-        }
-      ]
+      "cursor": [{"at": 0.8, "x": 0.15, "y": 0.4}, {"at": 1.8, "x": 0.15, "y": 0.4, "click": true}, {"at": 3.0, "x": 0.6, "y": 0.5}, {"at": 3.3, "x": 0.6, "y": 0.5, "click": true}]
     },
-    {
-      "type": "keys",
-      "duration": 3,
-      "keys": [
-        "⌘",
-        "K"
-      ],
-      "label": "Everything, one keystroke away",
-      "sublabel": "Keyboard-first by design"
-    },
-    {
-      "type": "device3d",
-      "duration": 4,
-      "device": "duo",
-      "motion": "float",
-      "media": "screen-2.png",
-      "phoneMedia": "phone.png",
-      "title": "On every device"
-    },
+    {"type": "keys", "duration": 3, "keys": ["⌘", "K"], "label": "Everything, one keystroke away", "sublabel": "Keyboard-first by design"},
     {
       "type": "features",
       "duration": 5,
       "title": "Built for focus",
       "items": [
-        {
-          "icon": "⏱",
-          "title": "Time blocks",
-          "text": "Your day, laid out hour by hour."
-        },
-        {
-          "icon": "🎯",
-          "title": "Goals",
-          "text": "Every task linked to why it matters."
-        },
-        {
-          "icon": "🔔",
-          "title": "Reminders",
-          "text": "Nudges on every device."
-        }
+        {"icon": "⏱", "title": "Time blocks", "text": "Your day, laid out hour by hour."},
+        {"icon": "🎯", "title": "Goals", "text": "Every task linked to why it matters."},
+        {"icon": "🔔", "title": "Reminders", "text": "Nudges on every device."}
       ]
     },
-    {
-      "type": "carousel3d",
-      "duration": 5,
-      "title": "And much more",
-      "items": [
-        {
-          "media": "screen-3.png",
-          "label": "Deadlines"
-        },
-        {
-          "media": "screen-4.png",
-          "label": "Focus mode"
-        },
-        {
-          "media": "screen-5.png",
-          "label": "Weekly review"
-        }
-      ]
-    },
-    {
-      "type": "cta",
-      "duration": 4,
-      "headline": "Plan less. Do more.",
-      "subline": "Free and open source.",
-      "button": "Try it now"
-    }
+    {"type": "montage", "duration": 3, "title": "And much more", "items": [{"media": "screen-3.png", "label": "Deadlines"}, {"media": "screen-4.png", "label": "Focus mode"}, {"media": "screen-5.png", "label": "Weekly review"}]},
+    {"type": "cta", "duration": 4, "headline": "Plan less. Do more.", "subline": "Free and open source.", "button": "Try it now"}
   ]
 }

@@ -5,9 +5,13 @@ import {loadFont as poppins} from '@remotion/google-fonts/Poppins';
 import {loadFont as spaceGrotesk} from '@remotion/google-fonts/SpaceGrotesk';
 import {loadFont as manrope} from '@remotion/google-fonts/Manrope';
 import {loadFont as dmSans} from '@remotion/google-fonts/DMSans';
-import type {Brand, FontName, ThemeSpec} from './spec';
+import {loadFont as instrumentSerif} from '@remotion/google-fonts/InstrumentSerif';
+import {loadFont as fraunces} from '@remotion/google-fonts/Fraunces';
+import {loadFont as newsreader} from '@remotion/google-fonts/Newsreader';
+import {loadFont as playfair} from '@remotion/google-fonts/PlayfairDisplay';
+import type {Brand, DisplayFontName, FontName, ThemeSpec} from './spec';
 
-export type Theme = Required<Omit<ThemeSpec, 'font'>> & {font: FontName; fontFamily: string};
+export type Theme = Required<Omit<ThemeSpec, 'font' | 'display'>> & {font: FontName; fontFamily: string; displayFamily: string; displayWeight: number; accentInk: string};
 
 export const DEFAULT_THEME: Required<ThemeSpec> = {
   bg: '#0B0D12',
@@ -20,6 +24,7 @@ export const DEFAULT_THEME: Required<ThemeSpec> = {
   font: 'Inter',
   radius: 18,
   background: 'gradient',
+  display: 'Inter',
 };
 
 const LOADERS: Record<FontName, () => {fontFamily: string}> = {
@@ -29,15 +34,41 @@ const LOADERS: Record<FontName, () => {fontFamily: string}> = {
   Manrope: () => manrope('normal', {weights: ['400', '500', '700', '800'], subsets: ['latin']}),
   'DM Sans': () => dmSans('normal', {weights: ['400', '500', '700', '800'], subsets: ['latin']}),
 };
-const loaded: Partial<Record<FontName, string>> = {};
-export const fontFamilyFor = (name: FontName) => {
-  if (!loaded[name]) loaded[name] = (LOADERS[name] ?? LOADERS.Inter)().fontFamily;
+const DISPLAY: Record<string, () => {fontFamily: string}> = {
+  'Instrument Serif': () => {
+    instrumentSerif('italic', {weights: ['400'], subsets: ['latin']});
+    return instrumentSerif('normal', {weights: ['400'], subsets: ['latin']});
+  },
+  Fraunces: () => {
+    fraunces('italic', {weights: ['400'], subsets: ['latin']});
+    return fraunces('normal', {weights: ['400'], subsets: ['latin']});
+  },
+  Newsreader: () => {
+    newsreader('italic', {weights: ['400'], subsets: ['latin']});
+    return newsreader('normal', {weights: ['400'], subsets: ['latin']});
+  },
+  'Playfair Display': () => {
+    playfair('italic', {weights: ['400'], subsets: ['latin']});
+    return playfair('normal', {weights: ['400'], subsets: ['latin']});
+  },
+};
+const loaded: Record<string, string> = {};
+export const fontFamilyFor = (name: FontName | DisplayFontName) => {
+  if (!loaded[name]) loaded[name] = (DISPLAY[name] ?? LOADERS[name as FontName] ?? LOADERS.Inter)().fontFamily;
   return loaded[name]!;
+};
+
+/** Darker version of a hex colour, for accents on bright photos. */
+const darken = (hex: string, k: number) => {
+  const n = parseInt(hex.replace('#', '').slice(0, 6), 16);
+  const c = (v: number) => Math.round(v * (1 - k)).toString(16).padStart(2, '0');
+  return `#${c((n >> 16) & 255)}${c((n >> 8) & 255)}${c(n & 255)}`;
 };
 
 export const resolveTheme = (t: ThemeSpec = {}): Theme => {
   const merged = {...DEFAULT_THEME, ...t};
-  return {...merged, fontFamily: fontFamilyFor(merged.font)};
+  const {display, ...rest} = merged;
+  return {...rest, fontFamily: fontFamilyFor(merged.font), displayFamily: fontFamilyFor(display ?? merged.font), displayWeight: DISPLAY[display ?? ''] ? 400 : 800, accentInk: darken(merged.accent, 0.45)};
 };
 
 type Ctx = {theme: Theme; brand: Brand};

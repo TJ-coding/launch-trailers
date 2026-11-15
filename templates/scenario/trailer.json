@@ -1,0 +1,270 @@
+{
+  "type": "scenario",
+  "title": "A day with Acme",
+  "format": "landscape",
+  "fps": 30,
+  "theme": {
+    "accent": "#6E8BFF",
+    "accent2": "#3FB68B",
+    "font": "Inter",
+    "display": "Instrument Serif",
+    "background": "solid"
+  },
+  "brand": {
+    "name": "Acme",
+    "logo": "logo.png",
+    "url": "acme.dev"
+  },
+  "transition": "fade",
+  "transitionDuration": 0.5,
+  "scenes": [
+    {
+      "type": "moment",
+      "duration": 4.5,
+      "photo": "photo-morning.jpg",
+      "camera": {
+        "from": {
+          "x": 0.55,
+          "y": 0.5,
+          "scale": 1.0
+        },
+        "to": {
+          "x": 0.7,
+          "y": 0.4,
+          "scale": 1.12
+        }
+      },
+      "time": "07:30",
+      "timeLabel": "Wake up",
+      "headline": "Wake up to a *plan*.",
+      "headlinePos": "bottom-left",
+      "tone": "dark",
+      "overlays": [
+        {
+          "kind": "notification",
+          "at": 1.0,
+          "pos": [
+            0.05,
+            0.07
+          ],
+          "title": "Good morning",
+          "text": "5 things today. First up: Design review at 09:00."
+        }
+      ]
+    },
+    {
+      "type": "moment",
+      "duration": 5,
+      "photo": "photo-desk.jpg",
+      "camera": {
+        "from": {
+          "x": 0.6,
+          "y": 0.5,
+          "scale": 1.0
+        },
+        "to": {
+          "x": 0.8,
+          "y": 0.45,
+          "scale": 1.3
+        }
+      },
+      "time": "09:00",
+      "timeLabel": "Deep work",
+      "headline": "Know what to do *now*.",
+      "headlinePos": "top-left",
+      "tone": "dark",
+      "chip": "NOW · Design review · 49:59 left",
+      "screens": [
+        {
+          "media": "screen-1.png",
+          "corners": [
+            [
+              0.684,
+              0.298
+            ],
+            [
+              0.955,
+              0.261
+            ],
+            [
+              0.922,
+              0.647
+            ],
+            [
+              0.656,
+              0.6
+            ]
+          ],
+          "at": 0.3
+        }
+      ]
+    },
+    {
+      "type": "moment",
+      "duration": 5,
+      "photo": "photo-laptop.jpg",
+      "camera": {
+        "from": {
+          "x": 0.4,
+          "y": 0.5,
+          "scale": 1.0
+        },
+        "to": {
+          "x": 0.3,
+          "y": 0.45,
+          "scale": 1.22
+        }
+      },
+      "time": "11:00",
+      "timeLabel": "Plan the week",
+      "headline": "Plan the week in *three moves*.",
+      "headlinePos": "top-right",
+      "tone": "dark",
+      "chip": "backlog → day → time",
+      "screens": [
+        {
+          "media": "screen-2.png",
+          "corners": [
+            [
+              0.067,
+              0.169
+            ],
+            [
+              0.514,
+              0.2
+            ],
+            [
+              0.528,
+              0.678
+            ],
+            [
+              0.075,
+              0.714
+            ]
+          ],
+          "at": 0.3
+        }
+      ],
+      "headlineWidth": 640
+    },
+    {
+      "type": "moment",
+      "duration": 4.5,
+      "photo": "photo-phone.jpg",
+      "camera": {
+        "from": {
+          "x": 0.5,
+          "y": 0.5,
+          "scale": 1.0
+        },
+        "to": {
+          "x": 0.5,
+          "y": 0.48,
+          "scale": 1.08
+        }
+      },
+      "time": "13:20",
+      "timeLabel": "On the move",
+      "headline": "Never miss the *next* thing.",
+      "headlinePos": "top-left",
+      "tone": "light",
+      "screens": [
+        {
+          "media": "phone.png",
+          "corners": [
+            [
+              0.486,
+              0.18
+            ],
+            [
+              0.661,
+              0.265
+            ],
+            [
+              0.532,
+              0.808
+            ],
+            [
+              0.36,
+              0.705
+            ]
+          ],
+          "at": 0.2,
+          "radius": 0.09
+        }
+      ],
+      "overlays": [
+        {
+          "kind": "notification",
+          "at": 1.5,
+          "pos": [
+            0.64,
+            0.42
+          ],
+          "width": 560,
+          "title": "Team sync",
+          "text": "Starts in 10 min. Leave now to be on time."
+        }
+      ],
+      "headlineWidth": 620
+    },
+    {
+      "type": "moment",
+      "duration": 4.5,
+      "photo": "photo-night.jpg",
+      "camera": {
+        "from": {
+          "x": 0.55,
+          "y": 0.5,
+          "scale": 1.0
+        },
+        "to": {
+          "x": 0.6,
+          "y": 0.5,
+          "scale": 1.1
+        }
+      },
+      "time": "22:00",
+      "timeLabel": "Sign off",
+      "headline": "Close the day *calm*.",
+      "headlinePos": "top-left",
+      "tone": "light",
+      "glow": {
+        "x": 0.55,
+        "y": 0.5,
+        "at": 0.6,
+        "size": 0.45
+      },
+      "overlays": [
+        {
+          "kind": "notification",
+          "at": 0.6,
+          "pos": [
+            0.56,
+            0.12
+          ],
+          "width": 600,
+          "title": "Day wrapped",
+          "text": "4 of 5 done. Tomorrow's plan is ready."
+        },
+        {
+          "kind": "toast",
+          "at": 2.2,
+          "pos": [
+            0.6,
+            0.76
+          ],
+          "text": "Debrief saved"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "duration": 4.5,
+      "photo": "photo-night.jpg",
+      "headline": "Take back control of your *life*.",
+      "subline": "Free to start.",
+      "button": "Try it now"
+    }
+  ]
+}

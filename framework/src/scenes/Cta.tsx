@@ -1,16 +1,23 @@
 import React from 'react';
-import {Button, KineticText, Logo, RiseText, Stage} from '../components';
+import {AbsoluteFill, Img, staticFile} from 'remotion';
+import {Button, hasFile, Headline, Logo, RiseText, Stage} from '../components';
 import {useBrand, useLayout} from '../theme';
 import type {CtaScene} from '../spec';
 
 /** Closing card: logo, headline, button, URL. */
-export const Cta: React.FC<CtaScene> = ({headline, subline, button = 'Try it now', url, showLogo = true}) => {
+export const Cta: React.FC<CtaScene> = ({headline, subline, button = 'Try it now', url, showLogo = true, photo}) => {
   const brand = useBrand();
   const {portrait} = useLayout();
   return (
+    <AbsoluteFill>
+    {photo && hasFile(photo) && (
+      <AbsoluteFill>
+        <Img src={staticFile(photo)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(14px) brightness(0.45) saturate(1.1)', transform: 'scale(1.08)'}} />
+      </AbsoluteFill>
+    )}
     <Stage gap={44}>
       {showLogo && <Logo size={130} withName />}
-      <KineticText text={headline} delay={0.3} size={portrait ? 100 : 110} />
+      <Headline text={headline} delay={0.3} size={portrait ? 104 : 116} align="center" maxWidth={1500} />
       {subline && (
         <RiseText size={42} muted delay={0.7}>
           {subline}
@@ -23,5 +30,6 @@ export const Cta: React.FC<CtaScene> = ({headline, subline, button = 'Try it now
         </RiseText>
       )}
     </Stage>
+    </AbsoluteFill>
   );
 };

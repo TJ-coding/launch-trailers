@@ -4,6 +4,7 @@
 
 export type Format = 'landscape' | 'square' | 'vertical';
 export type FontName = 'Inter' | 'Poppins' | 'Space Grotesk' | 'Manrope' | 'DM Sans';
+export type DisplayFontName = FontName | 'Instrument Serif' | 'Fraunces' | 'Newsreader' | 'Playfair Display';
 
 export type ThemeSpec = {
   bg?: string; // page background
@@ -14,6 +15,7 @@ export type ThemeSpec = {
   accent2?: string; // second accent (gradients)
   surface?: string; // cards / device chrome
   font?: FontName;
+  display?: DisplayFontName; // headline font for moment scenes (and cta)
   radius?: number; // px at 1080p
   background?: 'gradient' | 'grid' | 'dots' | 'solid';
 };
@@ -82,7 +84,40 @@ export type AssembleScene = Base & {
 };
 export type Carousel3DScene = Base & {type: 'carousel3d'; items: {media?: string; label?: string}[]; title?: string; aspect?: number};
 export type Logo3DScene = Base & {type: 'logo3d'; tagline?: string};
-export type CtaScene = Base & {type: 'cta'; headline: string; subline?: string; button?: string; url?: string; showLogo?: boolean};
+export type CtaScene = Base & {type: 'cta'; headline: string; subline?: string; button?: string; url?: string; showLogo?: boolean; photo?: string};
+
+export type Corners = [[number, number], [number, number], [number, number], [number, number]];
+export type Overlay = {
+  kind: 'notification' | 'bubble' | 'toast' | 'chip';
+  at?: number;
+  until?: number;
+  pos?: [number, number]; // top-left of the overlay, fractions of the frame
+  app?: string;
+  title?: string;
+  text: string;
+  time?: string;
+  from?: string; // bubble speaker
+  speak?: boolean; // bubble: light words up progressively
+  width?: number;
+};
+export type MomentScene = Base & {
+  type: 'moment';
+  photo: string; // full-bleed context photo (or video) in public/
+  after?: string; // same shot, changed state (lights on, screen on…)
+  changeAt?: number;
+  camera?: {from?: {x?: number; y?: number; scale?: number}; to?: {x?: number; y?: number; scale?: number}};
+  time?: string; // "07:30"
+  timeLabel?: string; // "Morning"
+  headline?: string; // *accent* words in italics
+  headlineWidth?: number; // max headline width in px at 1080p (wrap it away from the screen)
+  headlinePos?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center';
+  tone?: 'light' | 'dark'; // text colour: light for dark photos, dark for bright ones
+  shade?: boolean; // gradient behind the headline for legibility (default on)
+  chip?: string;
+  screens?: {media?: string; corners: Corners; at?: number; radius?: number; glare?: boolean}[];
+  overlays?: Overlay[];
+  glow?: {x: number; y: number; at?: number; size?: number}; // light bloom on the photo (a screen waking up)
+};
 
 export type Scene =
   | HookScene
@@ -97,6 +132,7 @@ export type Scene =
   | BeforeAfterScene
   | QuoteScene
   | CtaScene
+  | MomentScene
   | Device3DScene
   | AssembleScene
   | Carousel3DScene
@@ -105,7 +141,7 @@ export type Scene =
 export type SceneType = Scene['type'];
 
 export type TrailerSpec = {
-  type: 'product' | 'feature';
+  type: 'product' | 'feature' | 'scenario';
   title?: string;
   format?: Format;
   fps?: number;
@@ -131,6 +167,7 @@ export const DEFAULT_DURATION: Record<SceneType, number> = {
   beforeAfter: 5,
   quote: 4,
   cta: 4,
+  moment: 4,
   device3d: 5,
   assemble: 5,
   carousel3d: 6,

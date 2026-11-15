@@ -4,6 +4,7 @@ import {calculateTrailerMetadata, Trailer} from './Trailer';
 import type {TrailerSpec} from './spec';
 import product from '../../templates/product/trailer.json';
 import feature from '../../templates/feature/trailer.json';
+import scenario from '../../templates/scenario/trailer.json';
 
 const comp = (id: string, spec: TrailerSpec) => (
   <Composition
@@ -25,6 +26,7 @@ export const Root: React.FC = () => (
     <Folder name="Templates">
       {comp('ProductLaunch', product as TrailerSpec)}
       {comp('FeatureLaunch', feature as TrailerSpec)}
+      {comp('Scenario', scenario as TrailerSpec)}
     </Folder>
   </>
 );

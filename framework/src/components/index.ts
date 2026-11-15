@@ -12,3 +12,7 @@ export * from './Media';
 export * from './Stage';
 export * from './Text';
 export * from './ZoomPan';
+export * from './Headline';
+export * from './Overlays';
+export * from './quad';
+export * from './useImageSize';

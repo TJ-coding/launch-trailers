@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Scaffold a trailer folder from a template.
-#   scripts/new-trailer.sh product|feature <dir> ["Brand name"] [brand-url]
+#   scripts/new-trailer.sh product|feature|scenario <dir> ["Brand name"] [brand-url]
 set -euo pipefail
 source "$(dirname "$0")/_common.sh"
 type="${1:-}"; dir="${2:-}"; name="${3:-}"; url="${4:-}"
-if [[ "$type" != "product" && "$type" != "feature" ]] || [ -z "$dir" ]; then
-  echo "usage: $0 product|feature <dir> [\"Brand name\"] [brand-url]" >&2; exit 1
+if [[ "$type" != "product" && "$type" != "feature" && "$type" != "scenario" ]] || [ -z "$dir" ]; then
+  echo "usage: $0 product|feature|scenario <dir> [\"Brand name\"] [brand-url]" >&2; exit 1
 fi
 if [ -e "$dir/trailer.json" ]; then echo "error: $dir/trailer.json already exists" >&2; exit 1; fi
 mkdir -p "$dir/public"

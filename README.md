@@ -3,9 +3,10 @@
 A framework for **product launch trailers** and **feature launch trailers**.
 You describe the trailer as a list of scenes in one JSON file, and the kit
 renders it to MP4/GIF in 16:9, 1:1 and 9:16. It's built on
-[Remotion](https://www.remotion.dev) and three.js. It includes 3D laptop
-and phone models with your screenshots on them, UI that assembles itself from
-its widgets, and reusable scenes,
+[Remotion](https://www.remotion.dev). It includes **scenario moments** (your UI
+warped onto the screen in a real context photo, with notifications, chat bubbles
+and editorial headlines, for day-in-the-life ads), product-tour scenes, optional
+three.js scenes, and reusable scenes,
 components, scripts and an agent skill. It is meant to be consumed as a
 **git submodule**.
 
@@ -22,7 +23,8 @@ framework/src/
 │                      Button, Counter, KeyCaps, FeatureCard, DeviceFrame,
 │                      Media, ZoomPan, Callout, Cursor
 ├── scenes/            hook, problem, logo, announce, screen, montage, keys,
-│                      features, stat, beforeAfter, quote, cta, and in 3D:
+│                      features, stat, beforeAfter, quote, cta, moment
+│                      (context photo + UI on its screen + overlays); opt-in 3D:
 │                      logo3d, device3d (laptop/phone/duo: spin, open +
 │                      push-in, orbit, rise, float), assemble (widgets fly
 │                      into place / explode into layers), carousel3d
@@ -30,6 +32,7 @@ framework/src/
 templates/
 ├── product/           30s product-launch recipe (trailer.json + public/)
 ├── feature/           20s feature-launch recipe
+├── scenario/          25s day-in-the-life recipe (moments + cta)
 └── storyboard.md      the plan you fill in first
 scripts/               new-trailer, check-spec, studio, render, capture, grid, trim
 skills/launch-trailer/ SKILL.md + references/ (spec, components)

@@ -8,12 +8,12 @@ Files are names inside the trailer's `public/` folder.
 
 | field | default | |
 |---|---|---|
-| `type` | required | `"product"` or `"feature"` (only used by checks and recipes) |
+| `type` | required | `"product"`, `"feature"` or `"scenario"` (only used by checks and recipes) |
 | `title` | | for humans, shown by check-spec |
 | `format` | `landscape` | `landscape` 1920×1080 · `square` 1080×1080 · `vertical` 1080×1920 (render.sh can override) |
 | `fps` | 30 | |
 | `brand` | required | `{name, logo?, url?, tagline?}`; without a logo file you get a gradient lettermark |
-| `theme` | | `{bg, bg2, fg, muted, accent, accent2, surface, font, radius, background}`; `font`: Inter · Poppins · Space Grotesk · Manrope · DM Sans; `background`: gradient · grid · dots · solid |
+| `theme` | | `{bg, bg2, fg, muted, accent, accent2, surface, font, display, radius, background}`; `display`: headline font for moments and CTA (Instrument Serif · Fraunces · Newsreader · Playfair Display, or a body font); `font`: Inter · Poppins · Space Grotesk · Manrope · DM Sans; `background`: gradient · grid · dots · solid |
 | `music` | | `{src, volume=0.7, fadeIn=0.5, fadeOut=1.5, startFrom=0}` |
 | `transition` | `fade` | default between scenes: fade · slide · wipe · none |
 | `transitionDuration` | 0.4 | overlap between scenes (subtracted from total length) |
@@ -38,7 +38,30 @@ Files are names inside the trailer's `public/` folder.
 | `device3d` | 5 | `device` laptop·phone·duo, `media` (laptop screen, or phone screen when device=phone), `phoneMedia` (duo), `motion` spin·open·orbit·rise·float, `color` space·silver·midnight, `title?`, `caption?`, `pushIn` (dive into the laptop screen at the end, laptop only) |
 | `assemble` | 5 | `media`, `pieces[] {x,y,w,h}` (widget rectangles, fractions; ≤ 8), `mode` assemble·explode, `aspect?`, `title?`, `caption?` |
 | `carousel3d` | 6 | `items[] {media, label?}` (time split evenly; each comes to the front), `title?`, `aspect=16/10` |
-| `cta` | 4 | `headline`, `subline?`, `button="Try it now"`, `url?` (falls back to `brand.url`), `showLogo=true` |
+| `moment` | 4 | `photo` (context photo or video), `after?` + `changeAt` (crossfade to a changed version of the same shot), `camera {from, to}` (`{x, y, scale}`, slow push; default 1 → 1.08), `time?`, `timeLabel?`, `headline?` (`*accent*` words in italics), `headlinePos` top-left·top-right·bottom-left·bottom-right·center, `headlineWidth?`, `tone` light·dark, `shade=true`, `chip?`, `screens[] {media, corners, at, radius, glare}`, `overlays[]`, `glow? {x, y, at, size}` |
+| `cta` | 4 | `headline` (`*accent*` supported), `subline?`, `button="Try it now"`, `url?` (falls back to `brand.url`), `showLogo=true`, `photo?` (blurred, dimmed background) |
+
+### moment: screens and overlays
+
+```json
+"screens":  [{"media": "week.png", "corners": [[0.067, 0.169], [0.514, 0.2], [0.528, 0.678], [0.075, 0.714]], "at": 0.3, "radius": 0.015}],
+"overlays": [{"kind": "notification", "at": 1.5, "pos": [0.64, 0.42], "title": "Team sync", "text": "Starts in 10 min."},
+             {"kind": "bubble", "from": "You", "text": "Can you push my gym session to 5?", "at": 2.0},
+             {"kind": "toast", "text": "Gym moved to 5:00 PM", "at": 3.0},
+             {"kind": "chip", "text": "calendar.move {\"to\": \"17:00\"}", "at": 3.2}]
+```
+
+- `corners`: the screen's quad in the **photo** as fractions, in the order TL, TR, BR,
+  BL. The screenshot is warped onto it with a projective transform, moves
+  with the camera, and powers on at `at`. `radius` is a fraction of the screen
+  width (phones ≈ 0.09).
+- `overlays` sit on the **frame** (not the photo); `pos` is their top-left as
+  frame fractions. A `bubble` lights its words up as if spoken (`speak: false`
+  shows it all at once). `notification` takes `app` (default brand name),
+  `title`, `text`, `time`.
+- `theme.display` sets the headline font: Instrument Serif · Fraunces ·
+  Newsreader · Playfair Display. With a serif, accent words are italic;
+  without one, they get the accent gradient.
 
 ### screen: camera, callouts, cursor
 
@@ -61,7 +84,7 @@ Files are names inside the trailer's `public/` folder.
 - For video `media`, the clip plays from its start, so trim it to the scene
   length with `scripts/trim.sh`.
 
-### 3D scenes
+### 3D scenes (opt-in)
 
 3D scenes take **images only** (png/jpg/webp); check-spec flags video. They
 draw procedural models (no model files), lit with the theme's accent colours.
