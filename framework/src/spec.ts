@@ -29,7 +29,9 @@ export type CalloutSpec = {x: number; y: number; w: number; h: number; label?: s
 export type CursorKey = Point & {at: number; click?: boolean};
 export type Frame = 'browser' | 'window' | 'phone' | 'none';
 
-type Base = {duration?: number; transition?: Transition; audio?: string};
+/** Visual grammar: problems are dark, the solution brings the light. */
+export type Mood = 'problem' | 'solution';
+type Base = {duration?: number; transition?: Transition; audio?: string; mood?: Mood};
 export type Transition = 'fade' | 'slide' | 'wipe' | 'none';
 
 export type HookScene = Base & {type: 'hook'; lines: string[]; accentWords?: string[]};
@@ -84,6 +86,16 @@ export type AssembleScene = Base & {
 };
 export type Carousel3DScene = Base & {type: 'carousel3d'; items: {media?: string; label?: string}[]; title?: string; aspect?: number};
 export type Logo3DScene = Base & {type: 'logo3d'; tagline?: string};
+export type WidgetScene = Base & {
+  type: 'widget';
+  media?: string; // screen recording (or screenshot) in public/
+  crop?: [number, number, number, number]; // the component: x, y, w, h as fractions of the media
+  mediaAspect?: number; // width / height of the media (default 16/10)
+  startFrom?: number; // seconds into the recording
+  playbackRate?: number;
+  title?: string;
+  caption?: string;
+};
 export type CtaScene = Base & {type: 'cta'; headline: string; subline?: string; button?: string; url?: string; showLogo?: boolean; photo?: string};
 
 export type Corners = [[number, number], [number, number], [number, number], [number, number]];
@@ -133,6 +145,7 @@ export type Scene =
   | QuoteScene
   | CtaScene
   | MomentScene
+  | WidgetScene
   | Device3DScene
   | AssembleScene
   | Carousel3DScene
@@ -168,6 +181,7 @@ export const DEFAULT_DURATION: Record<SceneType, number> = {
   quote: 4,
   cta: 4,
   moment: 4,
+  widget: 4,
   device3d: 5,
   assemble: 5,
   carousel3d: 6,
@@ -179,6 +193,9 @@ export const FORMATS: Record<Format, {width: number; height: number}> = {
   square: {width: 1080, height: 1080},
   vertical: {width: 1080, height: 1920},
 };
+
+/** Problem scenes default to the dark mood. */
+export const sceneMood = (s: Scene): Mood => s.mood ?? (s.type === 'problem' ? 'problem' : 'solution');
 
 export const sceneSeconds = (s: Scene) => s.duration ?? DEFAULT_DURATION[s.type];
 export const transitionSeconds = (spec: TrailerSpec) => spec.transitionDuration ?? 0.4;

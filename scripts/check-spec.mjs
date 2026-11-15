@@ -3,6 +3,7 @@
 //   node scripts/check-spec.mjs <dir> [--strict] [--poster-frame] [--json]
 // --strict        missing media is an error (final renders), not a warning
 // --poster-frame  print only the frame number used for the poster still
+import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -14,8 +15,8 @@ if (!dir) {
   process.exit(1);
 }
 
-const DEFAULT_DURATION = {hook: 3, problem: 4, logo: 2.5, announce: 3, screen: 5, montage: 4, keys: 3, features: 5, stat: 3, beforeAfter: 5, quote: 4, cta: 4, device3d: 5, assemble: 5, carousel3d: 6, logo3d: 3, moment: 4};
-const REQUIRED = {hook: ['lines'], problem: ['items'], logo: [], announce: ['title'], screen: [], montage: ['items'], keys: ['keys'], features: ['items'], stat: ['value', 'label'], beforeAfter: ['before', 'after'], quote: ['text'], cta: ['headline'], device3d: [], assemble: ['pieces'], carousel3d: ['items'], logo3d: [], moment: ['photo']};
+const DEFAULT_DURATION = {hook: 3, problem: 4, logo: 2.5, announce: 3, screen: 5, montage: 4, keys: 3, features: 5, stat: 3, beforeAfter: 5, quote: 4, cta: 4, device3d: 5, assemble: 5, carousel3d: 6, logo3d: 3, moment: 4, widget: 4};
+const REQUIRED = {hook: ['lines'], problem: ['items'], logo: [], announce: ['title'], screen: [], montage: ['items'], keys: ['keys'], features: ['items'], stat: ['value', 'label'], beforeAfter: ['before', 'after'], quote: ['text'], cta: ['headline'], device3d: [], assemble: ['pieces'], carousel3d: ['items'], logo3d: [], moment: ['photo'], widget: ['media']};
 const FORMATS = ['landscape', 'square', 'vertical'];
 const FONTS = ['Inter', 'Poppins', 'Space Grotesk', 'Manrope', 'DM Sans'];
 const DISPLAY_FONTS = [...FONTS, 'Instrument Serif', 'Fraunces', 'Newsreader', 'Playfair Display'];
@@ -35,6 +36,14 @@ try {
   process.exit(1);
 }
 const pub = path.join(dir, 'public');
+// Average luminance 0..255 of an image (ffmpeg scales it to one grey pixel).
+const luma = (f) => {
+  try {
+    return execFileSync('ffmpeg', ['-v', 'error', '-i', path.join(pub, f), '-frames:v', '1', '-vf', 'scale=1:1,format=gray', '-f', 'rawvideo', '-'])[0];
+  } catch {
+    return undefined;
+  }
+};
 const media = (where, f, required = false) => {
   if (!f) {
     if (required) warn(`${where}: no media set, a placeholder will render`);
@@ -121,6 +130,19 @@ const rows = [];
     if (s.headline && s.headline.replace(/\*/g, '').split(/\s+/).length > 8) warn(`${where}: headline over 8 words`);
   }
   if (s.type === 'cta' && s.photo) media(`${where} photo`, s.photo);
+  if (s.mood && !['problem', 'solution'].includes(s.mood)) err(`${where}: mood must be problem or solution`);
+  // Visual grammar: problems are dark, the solution brings the light.
+  const mood = s.mood ?? (s.type === 'problem' ? 'problem' : 'solution');
+  const photo = s.photo && fs.existsSync(path.join(pub, s.photo)) && !/\.(mp4|webm|mov|m4v)$/i.test(s.photo) ? s.photo : undefined;
+  if (photo) {
+    const l = luma(photo);
+    if (l !== undefined && mood === 'problem' && l > 95) err(`${where}: problem scenes must be dark (light signals the solution); ${photo} averages ${l}/255, use a photo under ~95`);
+    if (l !== undefined && mood === 'solution' && l < 45) warn(`${where}: a solution scene on a very dark photo (${l}/255) reads as a problem; prefer warmer, brighter light`);
+  }
+  if (s.type === 'widget') {
+    media(where, s.media, true);
+    if (s.crop && (s.crop.length !== 4 || s.crop.some((v) => v < 0 || v > 1) || s.crop[0] + s.crop[2] > 1.001 || s.crop[1] + s.crop[3] > 1.001)) err(`${where}: crop must be [x, y, w, h] fractions inside the media`);
+  }
   if (s.type === 'montage') (s.items ?? []).forEach((it, j) => media(`${where} items[${j}]`, it.media, true));
   if (s.type === 'beforeAfter') ['before', 'after'].forEach((k) => s[k] && media(`${where} ${k}`, s[k].media));
   if (s.type === 'features' && s.items?.length > 6) warn(`${where}: only the first 6 items show`);
@@ -136,6 +158,8 @@ const total = Math.max(clock, 0);
 if (spec.type === 'feature' && total > 40) warn(`feature trailers work best under ~30s (this one is ${total.toFixed(1)}s)`);
 if (spec.type === 'product' && total > 75) warn(`product trailers work best at 30–60s (this one is ${total.toFixed(1)}s)`);
 const last = spec.scenes?.[spec.scenes.length - 1];
+const firstSolution = (spec.scenes ?? []).findIndex((s) => (s.mood ?? (s.type === 'problem' ? 'problem' : 'solution')) === 'solution');
+if ((spec.scenes ?? []).slice(firstSolution + 1).some((s) => s.mood === 'problem')) warn('a problem scene comes after the solution started; keep problems first (dark → light)');
 if (last && last.type !== 'cta') warn('the last scene is not a "cta": end on what to do next');
 
 if (args.includes('--poster-frame')) {

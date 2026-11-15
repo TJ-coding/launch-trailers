@@ -17,7 +17,7 @@ Files are names inside the trailer's `public/` folder.
 | `music` | | `{src, volume=0.7, fadeIn=0.5, fadeOut=1.5, startFrom=0}` |
 | `transition` | `fade` | default between scenes: fade · slide · wipe · none |
 | `transitionDuration` | 0.4 | overlap between scenes (subtracted from total length) |
-| `scenes` | required | array; each has `type`, optional `duration`, `transition`, `audio` (a voice-over or sound effect for that scene) |
+| `scenes` | required | array; each has `type`, optional `duration`, `transition`, `audio` (a voice-over or sound effect for that scene), `mood` problem·solution (`problem` is the default for the `problem` type) |
 
 ## Scenes
 
@@ -38,6 +38,7 @@ Files are names inside the trailer's `public/` folder.
 | `device3d` | 5 | `device` laptop·phone·duo, `media` (laptop screen, or phone screen when device=phone), `phoneMedia` (duo), `motion` spin·open·orbit·rise·float, `color` space·silver·midnight, `title?`, `caption?`, `pushIn` (dive into the laptop screen at the end, laptop only) |
 | `assemble` | 5 | `media`, `pieces[] {x,y,w,h}` (widget rectangles, fractions; ≤ 8), `mode` assemble·explode, `aspect?`, `title?`, `caption?` |
 | `carousel3d` | 6 | `items[] {media, label?}` (time split evenly; each comes to the front), `title?`, `aspect=16/10` |
+| `widget` | 4 | `media` (screen recording or screenshot), `crop [x, y, w, h]` (the one component, as fractions of the media), `mediaAspect=16/10`, `startFrom` (s), `playbackRate`, `title?`, `caption?`. The component plays big on its own card |
 | `moment` | 4 | `photo` (context photo or video), `after?` + `changeAt` (crossfade to a changed version of the same shot), `camera {from, to}` (`{x, y, scale}`, slow push; default 1 → 1.08), `time?`, `timeLabel?`, `headline?` (`*accent*` words in italics), `headlinePos` top-left·top-right·bottom-left·bottom-right·center, `headlineWidth?`, `tone` light·dark, `shade=true`, `chip?`, `screens[] {media, corners, at, radius, glare}`, `overlays[]`, `glow? {x, y, at, size}` |
 | `cta` | 4 | `headline` (`*accent*` supported), `subline?`, `button="Try it now"`, `url?` (falls back to `brand.url`), `showLogo=true`, `photo?` (blurred, dimmed background) |
 
@@ -100,6 +101,14 @@ draw procedural models (no model files), lit with the theme's accent colours.
   flat. `explode` does the reverse: it tilts the screen and lifts the pieces
   into floating layers. Use 3–6 pieces that don't overlap.
 - **`carousel3d`:** cover-flow with reflections, for breadth ("and much more").
+
+## Mood: problems are dark, the solution brings light
+
+`mood: "problem"` draws the scene on a near-black, cold background with no
+accent light. Solution scenes (the default) get the theme's glow. check-spec
+**fails** a problem scene whose photo averages above ~95/255 in brightness,
+and warns when a problem comes after the solution has started. Light means
+relief: never show a problem in a bright room.
 
 ## Timing tips
 

@@ -17,7 +17,7 @@ export const Cta: React.FC<CtaScene> = ({headline, subline, button = 'Try it now
     )}
     <Stage gap={44}>
       {showLogo && <Logo size={130} withName />}
-      <Headline text={headline} delay={0.3} size={portrait ? 104 : 116} align="center" maxWidth={1500} />
+      <Headline text={headline} delay={0.3} size={portrait ? 104 : 116} align="center" maxWidth={1800} />
       {subline && (
         <RiseText size={42} muted delay={0.7}>
           {subline}

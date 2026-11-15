@@ -7,7 +7,7 @@ import {wipe} from '@remotion/transitions/wipe';
 import {Background, hasFile} from './components';
 import {SCENES} from './scenes';
 import {resolveTheme, ThemeProvider} from './theme';
-import {FORMATS, sceneSeconds, sceneTransition, timeline, type Transition, type TrailerSpec} from './spec';
+import {FORMATS, sceneMood, sceneSeconds, sceneTransition, timeline, type Transition, type TrailerSpec} from './spec';
 import type {CalculateMetadataFunction} from 'remotion';
 import type {TransitionPresentation} from '@remotion/transitions';
 
@@ -31,6 +31,7 @@ export const Trailer: React.FC<TrailerSpec> = (spec) => {
     }
     items.push(
       <TransitionSeries.Sequence key={`s${i}`} durationInFrames={tl.scenes[i]}>
+        <Background mood={sceneMood(s)} />
         <Comp {...s} duration={sceneSeconds(s)} />
         {s.audio && hasFile(s.audio) && <Audio src={staticFile(s.audio)} />}
       </TransitionSeries.Sequence>,
@@ -44,7 +45,6 @@ export const Trailer: React.FC<TrailerSpec> = (spec) => {
   return (
     <ThemeProvider theme={theme} brand={spec.brand}>
       <AbsoluteFill style={{fontFamily: theme.fontFamily}}>
-        <Background />
         <TransitionSeries>{items}</TransitionSeries>
         {m && hasFile(m.src) && (
           <Audio

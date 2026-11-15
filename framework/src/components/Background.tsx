@@ -3,12 +3,20 @@ import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {alpha, useLayout, useTheme} from '../theme';
 
 /** Full-frame backdrop: slow-drifting glow plus an optional grid or dot texture. */
-export const Background: React.FC<{variant?: 'gradient' | 'grid' | 'dots' | 'solid'; intensity?: number}> = ({variant, intensity = 1}) => {
+export const Background: React.FC<{variant?: 'gradient' | 'grid' | 'dots' | 'solid'; intensity?: number; mood?: 'problem' | 'solution'}> = ({variant, intensity = 1, mood = 'solution'}) => {
   const theme = useTheme();
   const {u} = useLayout();
   const frame = useCurrentFrame();
   const v = variant ?? theme.background;
   const drift = Math.sin(frame / 90) * 8;
+  if (mood === 'problem')
+    // Problems are dark: near-black, cold, no accent light.
+    return (
+      <AbsoluteFill style={{background: '#050608'}}>
+        <AbsoluteFill style={{background: `radial-gradient(70% 60% at 50% 45%, rgba(120,130,150,0.07), transparent 70%)`}} />
+        <AbsoluteFill style={{boxShadow: `inset 0 0 ${260 * u}px rgba(0,0,0,0.9)`}} />
+      </AbsoluteFill>
+    );
   const glow =
     v === 'solid'
       ? 'none'

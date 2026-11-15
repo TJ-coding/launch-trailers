@@ -66,9 +66,9 @@ feature list:
 
 ## Recipes
 
-Pick the recipe from what the viewer needs to imagine. **Scenario is the
-strongest default for a product launch:** ads work when the viewer can picture
-themselves using the product, in their own day and setting.
+Default to **components at work**. Keep it concise (around 20s). Use **scenario** only with
+photos that genuinely show the target viewer's own setting (the owner rejected
+generic stock scenes).
 
 **Scenario / day in the life (20–35s), `new-trailer.sh scenario`**
 4–6 `moment` scenes, then a `cta` (with `photo`). Each moment is one concrete
@@ -79,10 +79,20 @@ day (morning → work → on the move → evening) or through one task end to en
 References: Project Glass "One day…", and the Hermes plugin videos (home at
 dusk, then lights, heat, blinds, each a single beat).
 
-**Product launch (30–60s, product tour)**
-`hook` → `problem` → `logo` → `screen` ×2–3 (the core loop, real UI) →
-`keys`/`stat`/`quote` (one proof) → `features` (3–6) → `montage` → `cta`.
-Swap one or two `screen`s for `moment`s to add context.
+**Product launch: components at work (≈20s, the owner's preferred style)**
+`problem` (dark, 3 short lines) → `logo` (the light comes on) → 3–4 `widget`
+scenes → `cta`. Each widget is **one component working**, cropped from a real
+screen recording: a countdown ticking, a parser reading a typed line, tasks
+dropping into a week, a graph tracing. One title of 3–5 words each. No
+feature lists, no keys or montage unless asked. Record the clips first
+(screen recording, or the app's own demo videos), then find each crop with
+`grid.mjs` on a frame (`ffmpeg -ss <t> -i clip.mp4 -frames:v 1 f.png`). Crop
+tight enough that UI text is readable at 1080p: about 0.35–0.7 of the
+recording's width.
+
+**Product tour (30–60s)**
+`hook` → `problem` → `logo` → `screen` ×2–3 → `keys`/`stat`/`quote` →
+`features` → `montage` → `cta`.
 
 **Feature launch (15–30s, one feature, existing users)**
 `announce` (badge "New in vX") → `moment` (the situation where the feature

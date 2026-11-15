@@ -6,6 +6,7 @@ import {Carousel3D} from './Carousel3D';
 import {Device3D} from './Device3D';
 import {Logo3D} from './Logo3D';
 import {Moment} from './Moment';
+import {Widget} from './Widget';
 import {BeforeAfter} from './BeforeAfter';
 import {Cta} from './Cta';
 import {Features} from './Features';
@@ -38,7 +39,8 @@ export const SCENES: Record<SceneType, React.FC<any>> = {
   carousel3d: Carousel3D,
   logo3d: Logo3D,
   moment: Moment,
+  widget: Widget,
 };
 
-export {Assemble, Carousel3D, Device3D, Logo3D, Moment};
+export {Assemble, Carousel3D, Device3D, Logo3D, Moment, Widget};
 export {Announce, BeforeAfter, Cta, Features, Hook, Keys, LogoReveal, Montage, Problem, Quote, Screen, Stat};
