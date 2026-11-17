@@ -9,6 +9,7 @@ import {Moment} from './Moment';
 import {Widget} from './Widget';
 import {BeforeAfter} from './BeforeAfter';
 import {Cta} from './Cta';
+import {Demo, End} from './Demo';
 import {Features} from './Features';
 import {Hook} from './Hook';
 import {Keys} from './Keys';
@@ -34,6 +35,8 @@ export const SCENES: Record<SceneType, React.FC<any>> = {
   beforeAfter: BeforeAfter,
   quote: Quote,
   cta: Cta,
+  demo: Demo,
+  end: End,
   device3d: Device3D,
   assemble: Assemble,
   carousel3d: Carousel3D,
@@ -43,4 +46,5 @@ export const SCENES: Record<SceneType, React.FC<any>> = {
 };
 
 export {Assemble, Carousel3D, Device3D, Logo3D, Moment, Widget};
+export * from './Demo';
 export {Announce, BeforeAfter, Cta, Features, Hook, Keys, LogoReveal, Montage, Problem, Quote, Screen, Stat};

@@ -5,6 +5,9 @@ import {loadFont as poppins} from '@remotion/google-fonts/Poppins';
 import {loadFont as spaceGrotesk} from '@remotion/google-fonts/SpaceGrotesk';
 import {loadFont as manrope} from '@remotion/google-fonts/Manrope';
 import {loadFont as dmSans} from '@remotion/google-fonts/DMSans';
+import {loadFont as sora} from '@remotion/google-fonts/Sora';
+import {loadFont as hanken} from '@remotion/google-fonts/HankenGrotesk';
+import {loadFont as schibsted} from '@remotion/google-fonts/SchibstedGrotesk';
 import {loadFont as instrumentSerif} from '@remotion/google-fonts/InstrumentSerif';
 import {loadFont as fraunces} from '@remotion/google-fonts/Fraunces';
 import {loadFont as newsreader} from '@remotion/google-fonts/Newsreader';
@@ -25,6 +28,7 @@ export const DEFAULT_THEME: Required<ThemeSpec> = {
   radius: 18,
   background: 'gradient',
   display: 'Inter',
+  grade: 'none',
 };
 
 const LOADERS: Record<FontName, () => {fontFamily: string}> = {
@@ -33,6 +37,9 @@ const LOADERS: Record<FontName, () => {fontFamily: string}> = {
   'Space Grotesk': () => spaceGrotesk('normal', {weights: ['400', '500', '700'], subsets: ['latin']}),
   Manrope: () => manrope('normal', {weights: ['400', '500', '700', '800'], subsets: ['latin']}),
   'DM Sans': () => dmSans('normal', {weights: ['400', '500', '700', '800'], subsets: ['latin']}),
+  Sora: () => sora('normal', {weights: ['400', '600', '700', '800'], subsets: ['latin']}),
+  'Hanken Grotesk': () => hanken('normal', {weights: ['400', '600', '700', '800'], subsets: ['latin']}),
+  'Schibsted Grotesk': () => schibsted('normal', {weights: ['400', '600', '700', '800'], subsets: ['latin']}),
 };
 const DISPLAY: Record<string, () => {fontFamily: string}> = {
   'Instrument Serif': () => {

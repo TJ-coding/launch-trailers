@@ -1,32 +1,34 @@
-# Storyboard: <trailer name>
-
-Fill this in **before** touching trailer.json. Every scene row becomes one scene.
+# Storyboard: <film name>
 
 ## Brief
 - **Product / feature:**
-- **Audience:** who watches, where (landing page hero, X/LinkedIn, Product Hunt, release notes, App Store)
-- **Format(s):** landscape 16:9 · square 1:1 · vertical 9:16
-- **Length:** product 30–60s · feature 15–30s
-- **The one thing they should remember:**
-- **Call to action:** button text + URL
+- **Viewer** (who, and what bothers them, in one line):
+- **Where it will be posted:**
+- **Sound:** silent / music (track: )
+- **Promise** (the one sentence they should believe afterwards):
+- **The product's own method or steps, if it has one** (the film follows it):
+- **The screen the owner is proudest of** (give it the most room):
+- **CTA:** Try it now → <url>
 
-## Story (one sentence per beat)
-1. Hook: the claim or question that stops the scroll
-2. Problem / before: the pain, in the viewer's words
-3. Reveal: product or feature name
-4. Proof: show it working (real UI, 1–3 screens)
-5. Payoff: features, stat, quote, before→after
-6. Action: what to do now
+## The session
+One person, one job, recorded in one go. Who are they, what moment is it
+(day, time), and what do they get done?
 
-## Scene contract
-| # | type | seconds | on-screen words (≤ 8) | what the viewer must see | media |
-|---|------|---------|-----------------------|--------------------------|-------|
-| 1 | hook | 3 | | | — |
-| 2 | | | | | |
-| … | cta | 4 | | | logo.png |
+Write it as a chain. Each row must follow from the row above; if a row could
+be removed without breaking the chain, remove it.
 
-## Assets checklist
-- [ ] logo.png (square, transparent)
-- [ ] screenshots at the frame's aspect (browser/window 16:10 → 1440×900 @2x; phone 9:19.5)
-- [ ] screen recordings trimmed with scripts/trim.sh
-- [ ] music.mp3 (licensed for this use)
+| # | clip | headline (2-5 words, one [boxed]) | they do… | the product does… (what visibly changes) |
+|---|------|-----------------------------------|----------|-------------------------------------------|
+| 1 | home | | | |
+| 2 | | | | |
+| 3 | | | | |
+| 4 | | | | |
+| 5 | end | | | Try it now, URL |
+
+Data that carries through (typed in scene __, seen again in scene __):
+
+Data check: for each shot, the large values on screen and why they agree with
+the headline (clock time, running task, nothing overdue):
+
+## Review log
+After each draft: what failed in review.md, what changed, what is still weak.

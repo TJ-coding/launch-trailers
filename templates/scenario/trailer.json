@@ -1,6 +1,7 @@
 {
   "type": "scenario",
-  "title": "A day with Acme",
+  "title": "Acme: what now",
+  "promise": "Open Acme and you always know the one thing to do next.",
   "format": "landscape",
   "fps": 30,
   "theme": {
@@ -8,19 +9,72 @@
     "accent2": "#3FB68B",
     "font": "Inter",
     "display": "Instrument Serif",
-    "background": "solid"
+    "background": "solid",
+    "grade": "film"
   },
   "brand": {
     "name": "Acme",
     "logo": "logo.png",
     "url": "acme.dev"
   },
-  "transition": "fade",
-  "transitionDuration": 0.5,
+  "music": {
+    "src": "music.mp3",
+    "volume": 0.6,
+    "bpm": 120,
+    "offset": 0
+  },
+  "transition": "cut",
+  "transitionDuration": 0.4,
   "scenes": [
     {
       "type": "moment",
-      "duration": 4.5,
+      "mood": "problem",
+      "duration": 3.2,
+      "photo": "photo-night-stressed.jpg",
+      "camera": {
+        "from": {
+          "x": 0.6,
+          "y": 0.5,
+          "scale": 1.0
+        },
+        "to": {
+          "x": 0.66,
+          "y": 0.45,
+          "scale": 1.14
+        }
+      },
+      "headline": "Forty tasks. *What now?*",
+      "headlinePos": "top-left",
+      "tone": "light",
+      "overlays": [
+        {
+          "kind": "notification",
+          "app": "Calendar",
+          "at": 0.5,
+          "pos": [
+            0.05,
+            0.46
+          ],
+          "width": 520,
+          "text": "Due 09:00"
+        },
+        {
+          "kind": "notification",
+          "app": "Reminders",
+          "at": 0.8,
+          "pos": [
+            0.05,
+            0.59
+          ],
+          "width": 520,
+          "text": "6 overdue"
+        }
+      ]
+    },
+    {
+      "type": "moment",
+      "transition": "fade",
+      "duration": 3.7,
       "photo": "photo-morning.jpg",
       "camera": {
         "from": {
@@ -29,80 +83,43 @@
           "scale": 1.0
         },
         "to": {
-          "x": 0.7,
-          "y": 0.4,
-          "scale": 1.12
+          "x": 0.6,
+          "y": 0.45,
+          "scale": 1.06
         }
       },
-      "time": "07:30",
-      "timeLabel": "Wake up",
-      "headline": "Wake up to a *plan*.",
-      "headlinePos": "bottom-left",
+      "headline": "Wake up knowing what's *next*.",
+      "headlinePos": "top-left",
       "tone": "dark",
       "overlays": [
         {
-          "kind": "notification",
-          "at": 1.0,
+          "kind": "widget",
+          "media": "now.mp4",
+          "crop": [
+            0.17,
+            0.07,
+            0.5,
+            0.24
+          ],
+          "focus": {
+            "x": 0.0,
+            "y": 0.35,
+            "scale": 1.4,
+            "at": 1.1
+          },
+          "at": 0.25,
           "pos": [
             0.05,
-            0.07
+            0.3
           ],
-          "title": "Good morning",
-          "text": "5 things today. First up: Design review at 09:00."
+          "width": 1200
         }
       ]
     },
     {
       "type": "moment",
-      "duration": 5,
+      "duration": 2.5,
       "photo": "photo-desk.jpg",
-      "camera": {
-        "from": {
-          "x": 0.6,
-          "y": 0.5,
-          "scale": 1.0
-        },
-        "to": {
-          "x": 0.8,
-          "y": 0.45,
-          "scale": 1.3
-        }
-      },
-      "time": "09:00",
-      "timeLabel": "Deep work",
-      "headline": "Know what to do *now*.",
-      "headlinePos": "top-left",
-      "tone": "dark",
-      "chip": "NOW · Design review · 49:59 left",
-      "screens": [
-        {
-          "media": "screen-1.png",
-          "corners": [
-            [
-              0.684,
-              0.298
-            ],
-            [
-              0.955,
-              0.261
-            ],
-            [
-              0.922,
-              0.647
-            ],
-            [
-              0.656,
-              0.6
-            ]
-          ],
-          "at": 0.3
-        }
-      ]
-    },
-    {
-      "type": "moment",
-      "duration": 5,
-      "photo": "photo-laptop.jpg",
       "camera": {
         "from": {
           "x": 0.4,
@@ -110,108 +127,38 @@
           "scale": 1.0
         },
         "to": {
-          "x": 0.3,
-          "y": 0.45,
-          "scale": 1.22
+          "x": 0.36,
+          "y": 0.5,
+          "scale": 1.06
         }
       },
-      "time": "11:00",
-      "timeLabel": "Plan the week",
-      "headline": "Plan the week in *three moves*.",
+      "headline": "Type it. It's *planned*.",
       "headlinePos": "top-right",
       "tone": "dark",
-      "chip": "backlog → day → time",
-      "screens": [
-        {
-          "media": "screen-2.png",
-          "corners": [
-            [
-              0.067,
-              0.169
-            ],
-            [
-              0.514,
-              0.2
-            ],
-            [
-              0.528,
-              0.678
-            ],
-            [
-              0.075,
-              0.714
-            ]
-          ],
-          "at": 0.3
-        }
-      ],
-      "headlineWidth": 640
-    },
-    {
-      "type": "moment",
-      "duration": 4.5,
-      "photo": "photo-phone.jpg",
-      "camera": {
-        "from": {
-          "x": 0.5,
-          "y": 0.5,
-          "scale": 1.0
-        },
-        "to": {
-          "x": 0.5,
-          "y": 0.48,
-          "scale": 1.08
-        }
-      },
-      "time": "13:20",
-      "timeLabel": "On the move",
-      "headline": "Never miss the *next* thing.",
-      "headlinePos": "top-left",
-      "tone": "light",
-      "screens": [
-        {
-          "media": "phone.png",
-          "corners": [
-            [
-              0.486,
-              0.18
-            ],
-            [
-              0.661,
-              0.265
-            ],
-            [
-              0.532,
-              0.808
-            ],
-            [
-              0.36,
-              0.705
-            ]
-          ],
-          "at": 0.2,
-          "radius": 0.09
-        }
-      ],
       "overlays": [
         {
-          "kind": "notification",
-          "at": 1.5,
-          "pos": [
-            0.64,
-            0.42
+          "kind": "widget",
+          "media": "quickadd.mp4",
+          "playbackRate": 2,
+          "crop": [
+            0.34,
+            0.06,
+            0.4,
+            0.1
           ],
-          "width": 560,
-          "title": "Team sync",
-          "text": "Starts in 10 min. Leave now to be on time."
+          "at": 0.2,
+          "pos": [
+            0.38,
+            0.4
+          ],
+          "width": 1120
         }
-      ],
-      "headlineWidth": 620
+      ]
     },
     {
       "type": "moment",
-      "duration": 4.5,
-      "photo": "photo-night.jpg",
+      "duration": 4.2,
+      "photo": "photo-night-calm.jpg",
       "camera": {
         "from": {
           "x": 0.55,
@@ -221,48 +168,37 @@
         "to": {
           "x": 0.6,
           "y": 0.5,
-          "scale": 1.1
+          "scale": 1.08
         }
       },
-      "time": "22:00",
-      "timeLabel": "Sign off",
-      "headline": "Close the day *calm*.",
+      "headline": "Every step moves a *goal*.",
       "headlinePos": "top-left",
       "tone": "light",
-      "glow": {
-        "x": 0.55,
-        "y": 0.5,
-        "at": 0.6,
-        "size": 0.45
-      },
       "overlays": [
         {
-          "kind": "notification",
-          "at": 0.6,
-          "pos": [
-            0.56,
-            0.12
+          "kind": "widget",
+          "media": "goals.mp4",
+          "crop": [
+            0.36,
+            0.5,
+            0.4,
+            0.42
           ],
-          "width": 600,
-          "title": "Day wrapped",
-          "text": "4 of 5 done. Tomorrow's plan is ready."
-        },
-        {
-          "kind": "toast",
-          "at": 2.2,
+          "at": 0.3,
           "pos": [
-            0.6,
-            0.76
+            0.05,
+            0.3
           ],
-          "text": "Debrief saved"
+          "width": 1100
         }
       ]
     },
     {
       "type": "cta",
-      "duration": 4.5,
-      "photo": "photo-night.jpg",
-      "headline": "Take back control of your *life*.",
+      "transition": "fade",
+      "duration": 4.2,
+      "photo": "photo-night-calm.jpg",
+      "headline": "Know what to do *now*.",
       "subline": "Free to start.",
       "button": "Try it now"
     }

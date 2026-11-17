@@ -3,7 +3,7 @@
 // skills/launch-trailer/references/spec.md for the full field reference.
 
 export type Format = 'landscape' | 'square' | 'vertical';
-export type FontName = 'Inter' | 'Poppins' | 'Space Grotesk' | 'Manrope' | 'DM Sans';
+export type FontName = 'Inter' | 'Poppins' | 'Space Grotesk' | 'Manrope' | 'DM Sans' | 'Sora' | 'Hanken Grotesk' | 'Schibsted Grotesk';
 export type DisplayFontName = FontName | 'Instrument Serif' | 'Fraunces' | 'Newsreader' | 'Playfair Display';
 
 export type ThemeSpec = {
@@ -18,9 +18,11 @@ export type ThemeSpec = {
   display?: DisplayFontName; // headline font for moment scenes (and cta)
   radius?: number; // px at 1080p
   background?: 'gradient' | 'grid' | 'dots' | 'solid';
+  grade?: 'none' | 'warm' | 'cool' | 'film'; // one colour grade over every context photo, so mixed sources read as one film
 };
 
-export type Brand = {name: string; logo?: string; url?: string; tagline?: string};
+/** `logo`: the small square mark. `lockup`: the full logo artwork that already contains the name; when set, the end scene shows it large (and a demo scene does with brandMark: 'lockup'). */
+export type Brand = {name: string; logo?: string; lockup?: string; url?: string; tagline?: string};
 
 /** Position on a screenshot as fractions of its width/height (0..1). */
 export type Point = {x: number; y: number};
@@ -32,7 +34,7 @@ export type Frame = 'browser' | 'window' | 'phone' | 'none';
 /** Visual grammar: problems are dark, the solution brings the light. */
 export type Mood = 'problem' | 'solution';
 type Base = {duration?: number; transition?: Transition; audio?: string; mood?: Mood};
-export type Transition = 'fade' | 'slide' | 'wipe' | 'none';
+export type Transition = 'fade' | 'slide' | 'wipe' | 'cut' | 'none'; // cut = none (a hard cut)
 
 export type HookScene = Base & {type: 'hook'; lines: string[]; accentWords?: string[]};
 export type ProblemScene = Base & {type: 'problem'; title?: string; items: string[]; strike?: boolean};
@@ -93,9 +95,41 @@ export type WidgetScene = Base & {
   mediaAspect?: number; // width / height of the media (default 16/10)
   startFrom?: number; // seconds into the recording
   playbackRate?: number;
+  focus?: Focus; // punch in on the spot where the change happens
+  uiWidth?: number; // CSS px width of the recorded window (default 1440); used by check-spec's legibility estimate
   title?: string;
   caption?: string;
 };
+/** Punch-in inside a widget: (x, y) are fractions of the crop; it eases in at `at`, and back out at `until` if set. */
+export type Focus = {x: number; y: number; scale: number; at?: number; until?: number};
+/**
+ * The demo-film scene: a flat colour field, the real product large, one heavy headline.
+ * `[word]` in the headline gets a selection box. `layout: 'full'` makes the product fill the frame.
+ */
+export type DemoScene = Base & {
+  type: 'demo';
+  bg?: 'paper' | 'ink' | 'accent' | 'accent2' | string; // or a hex colour
+  headline?: string; // 2-5 words; [boxed] phrase; \n for a line break
+  headlineSize?: number;
+  layout?: 'left' | 'right' | 'top' | 'full'; // where the words sit (full: over the product)
+  media?: string; // a clip from record.mjs (or a screenshot) in public/
+  mediaAspect?: number; // width / height of the media (clips.json)
+  uiWidth?: number; // CSS px width of the recorded viewport (clips.json), for the legibility estimate
+  startFrom?: number;
+  playbackRate?: number;
+  view?: ZoomKey[]; // camera on the media: centre (x, y) and scale over time
+  windowWidth?: number; // fraction of the frame width the window may take (default 0.54)
+  windowAspect?: number; // show a window of another shape than the media (it crops to `view`)
+  tilt?: boolean; // hold the window in perspective (opening shot)
+  prompt?: {label?: string; text: string; at?: number; cps?: number; until?: number}; // what the person typed
+  steps?: {text: string; at: number}[]; // short results ticking in under the headline
+  check?: boolean; // steps as ticks instead of numbers
+  tag?: string; // label on the pointer next to the boxed word
+  brandMark?: boolean | 'lockup'; // true: the small mark + name above the headline; 'lockup': the full logo artwork instead
+  kicker?: string; // small step label above the headline: "1 · Strategise"
+};
+/** Closing card. With `media` it becomes a hero shot: the product rising large behind the line. */
+export type EndScene = Base & {type: 'end'; bg?: string; headline: string; button?: string; url?: string; tag?: string; note?: string; media?: string; mediaAspect?: number; uiWidth?: number; startFrom?: number; view?: ZoomKey[]};
 export type CtaScene = Base & {type: 'cta'; headline: string; subline?: string; button?: string; url?: string; showLogo?: boolean; photo?: string};
 
 export type Corners = [[number, number], [number, number], [number, number], [number, number]];
@@ -107,6 +141,8 @@ export type Overlay = {
   mediaAspect?: number;
   startFrom?: number;
   playbackRate?: number;
+  focus?: Focus;
+  uiWidth?: number;
   at?: number;
   until?: number;
   pos?: [number, number]; // top-left of the overlay, fractions of the frame
@@ -150,6 +186,8 @@ export type Scene =
   | BeforeAfterScene
   | QuoteScene
   | CtaScene
+  | DemoScene
+  | EndScene
   | MomentScene
   | WidgetScene
   | Device3DScene
@@ -162,11 +200,12 @@ export type SceneType = Scene['type'];
 export type TrailerSpec = {
   type: 'product' | 'feature' | 'scenario';
   title?: string;
+  promise?: string; // the one thing the viewer should believe after watching; every scene must serve it
   format?: Format;
   fps?: number;
   theme?: ThemeSpec;
   brand: Brand;
-  music?: {src: string; volume?: number; fadeIn?: number; fadeOut?: number; startFrom?: number};
+  music?: {src: string; volume?: number; fadeIn?: number; fadeOut?: number; startFrom?: number; bpm?: number; offset?: number}; // bpm + offset (s of the first beat, after startFrom): check-spec snaps cuts to the beat
   transition?: Transition; // default between scenes
   transitionDuration?: number; // seconds
   scenes: Scene[];
@@ -186,6 +225,8 @@ export const DEFAULT_DURATION: Record<SceneType, number> = {
   beforeAfter: 5,
   quote: 4,
   cta: 4,
+  demo: 4,
+  end: 3.5,
   moment: 4,
   widget: 4,
   device3d: 5,
@@ -205,7 +246,10 @@ export const sceneMood = (s: Scene): Mood => s.mood ?? (s.type === 'problem' ? '
 
 export const sceneSeconds = (s: Scene) => s.duration ?? DEFAULT_DURATION[s.type];
 export const transitionSeconds = (spec: TrailerSpec) => spec.transitionDuration ?? 0.4;
-export const sceneTransition = (spec: TrailerSpec, s: Scene): Transition => s.transition ?? spec.transition ?? 'fade';
+export const sceneTransition = (spec: TrailerSpec, s: Scene): Transition => {
+  const t = s.transition ?? spec.transition ?? 'fade';
+  return t === 'cut' ? 'none' : t;
+};
 
 /** Frames per scene and total, accounting for transition overlaps. */
 export const timeline = (spec: TrailerSpec) => {

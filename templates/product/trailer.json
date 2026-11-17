@@ -1,48 +1,147 @@
 {
   "type": "product",
-  "title": "Acme launch trailer",
+  "title": "Acme: launch film",
+  "promise": "Write the one sentence the viewer should believe afterwards.",
   "format": "landscape",
   "fps": 30,
-  "theme": {"accent": "#6E8BFF", "accent2": "#B57CFF", "font": "Inter", "background": "grid"},
-  "brand": {"name": "Acme", "logo": "logo.png", "url": "acme.dev", "tagline": "The calm way to plan your day."},
-  "music": {"src": "music.mp3", "volume": 0.6},
+  "silent": true,
+  "transition": "cut",
+  "theme": {
+    "bg": "#F2F0EB",
+    "fg": "#101216",
+    "accent": "#2563EB",
+    "accent2": "#F2B632",
+    "font": "Sora"
+  },
+  "brand": {
+    "name": "Acme",
+    "logo": "logo.png",
+    "url": "acme.dev"
+  },
   "scenes": [
-    {"type": "hook", "duration": 3, "lines": ["Your whole day.", "One screen."], "accentWords": ["One"]},
-    {"type": "problem", "duration": 4, "title": "Planning today means", "items": ["Five apps", "Three calendars", "Zero focus"]},
-    {"type": "logo", "duration": 2.5},
     {
-      "type": "screen",
-      "duration": 5,
-      "media": "screen-1.png",
-      "frame": "browser",
-      "url": "acme.dev",
-      "title": "See what matters now",
-      "caption": "Today's blocks, deadlines and next step, at a glance.",
-      "zoom": [{"at": 0.8, "x": 0.5, "y": 0.5, "scale": 1}, {"at": 2.6, "x": 0.3, "y": 0.35, "scale": 1.6}],
-      "callouts": [{"x": 0.2, "y": 0.25, "w": 0.22, "h": 0.18, "label": "Right now", "at": 2.8}]
-    },
-    {
-      "type": "screen",
-      "duration": 5,
-      "media": "screen-2.png",
-      "frame": "window",
+      "type": "demo",
+      "duration": 3.4,
+      "bg": "paper",
       "layout": "left",
-      "title": "Plan the week in minutes",
-      "caption": "Drag tasks from the backlog onto your days.",
-      "cursor": [{"at": 0.8, "x": 0.15, "y": 0.4}, {"at": 1.8, "x": 0.15, "y": 0.4, "click": true}, {"at": 3.0, "x": 0.6, "y": 0.5}, {"at": 3.3, "x": 0.6, "y": 0.5, "click": true}]
-    },
-    {"type": "keys", "duration": 3, "keys": ["⌘", "K"], "label": "Everything, one keystroke away", "sublabel": "Keyboard-first by design"},
-    {
-      "type": "features",
-      "duration": 5,
-      "title": "Built for focus",
-      "items": [
-        {"icon": "⏱", "title": "Time blocks", "text": "Your day, laid out hour by hour."},
-        {"icon": "🎯", "title": "Goals", "text": "Every task linked to why it matters."},
-        {"icon": "🔔", "title": "Reminders", "text": "Nudges on every device."}
+      "tilt": true,
+      "brandMark": true,
+      "headline": "does the thing\nyou [need].",
+      "media": "home.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.35,
+          "scale": 1.3
+        }
       ]
     },
-    {"type": "montage", "duration": 3, "title": "And much more", "items": [{"media": "screen-3.png", "label": "Deadlines"}, {"media": "screen-4.png", "label": "Focus mode"}, {"media": "screen-5.png", "label": "Weekly review"}]},
-    {"type": "cta", "duration": 4, "headline": "Plan less. Do more.", "subline": "Free and open source.", "button": "Try it now"}
+    {
+      "type": "demo",
+      "duration": 4.6,
+      "layout": "full",
+      "media": "ask.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "startFrom": 1.0,
+      "prompt": {
+        "label": "Just type it.",
+        "text": "What the person types",
+        "at": 0.45,
+        "until": 2.2
+      },
+      "view": [
+        {
+          "at": 0,
+          "x": 0.6,
+          "y": 0.6,
+          "scale": 1.3
+        },
+        {
+          "at": 2.2,
+          "x": 0.6,
+          "y": 0.6,
+          "scale": 1.3
+        },
+        {
+          "at": 2.9,
+          "x": 0.6,
+          "y": 0.5,
+          "scale": 2.1
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "duration": 5.4,
+      "bg": "accent",
+      "layout": "left",
+      "headline": "It does\n[the work].",
+      "media": "work.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "playbackRate": 1.5,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.4,
+          "y": 0.4,
+          "scale": 1.6
+        }
+      ],
+      "check": true,
+      "steps": [
+        {
+          "text": "First result",
+          "at": 1.0
+        },
+        {
+          "text": "Second result",
+          "at": 2.2
+        },
+        {
+          "text": "Third result",
+          "at": 3.4
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "duration": 4.4,
+      "bg": "accent2",
+      "layout": "right",
+      "headline": "And you get\n[the result].",
+      "media": "result.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.4,
+          "scale": 1.6
+        }
+      ]
+    },
+    {
+      "type": "end",
+      "duration": 4.4,
+      "headline": "The promise, [short].",
+      "button": "Try it now",
+      "media": "result.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.35,
+          "scale": 1.2
+        }
+      ]
+    }
   ]
 }

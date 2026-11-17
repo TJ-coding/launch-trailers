@@ -1,26 +1,113 @@
 {
   "type": "feature",
-  "title": "Acme: Focus mode",
+  "title": "Acme: new feature",
+  "promise": "Write what existing users can now do.",
   "format": "landscape",
   "fps": 30,
-  "theme": {"accent": "#7CF29C", "accent2": "#5AD1FF", "font": "Inter", "background": "dots"},
-  "brand": {"name": "Acme", "logo": "logo.png", "url": "acme.dev"},
-  "music": {"src": "music.mp3", "volume": 0.6},
+  "silent": true,
+  "transition": "cut",
+  "theme": {
+    "bg": "#F2F0EB",
+    "fg": "#101216",
+    "accent": "#2563EB",
+    "accent2": "#F2B632",
+    "font": "Sora"
+  },
+  "brand": {
+    "name": "Acme",
+    "logo": "logo.png",
+    "url": "acme.dev"
+  },
   "scenes": [
-    {"type": "announce", "duration": 3, "badge": "New in v2.4", "title": "Focus mode", "subtitle": "One task. Nothing else."},
-    {"type": "beforeAfter", "duration": 5, "title": "Less noise, more done", "before": {"label": "Before", "items": ["Twelve tabs open", "Notifications everywhere"]}, "after": {"label": "After", "items": ["Just the task at hand", "A timer that keeps you honest"]}},
     {
-      "type": "screen",
-      "duration": 6,
-      "media": "feature.png",
-      "frame": "browser",
-      "url": "acme.dev/#/focus",
-      "title": "Start it from any task",
-      "zoom": [{"at": 0.6, "x": 0.5, "y": 0.5, "scale": 1}, {"at": 2.2, "x": 0.7, "y": 0.3, "scale": 1.7}, {"at": 4.6, "x": 0.7, "y": 0.3, "scale": 1.7}, {"at": 5.6, "x": 0.5, "y": 0.5, "scale": 1}],
-      "callouts": [{"x": 0.62, "y": 0.22, "w": 0.18, "h": 0.12, "label": "One click", "at": 2.4, "until": 4.6}],
-      "cursor": [{"at": 1.0, "x": 0.4, "y": 0.6}, {"at": 2.3, "x": 0.71, "y": 0.28}, {"at": 2.6, "x": 0.71, "y": 0.28, "click": true}]
+      "type": "demo",
+      "duration": 3.2,
+      "bg": "paper",
+      "layout": "left",
+      "tilt": true,
+      "brandMark": true,
+      "headline": "can now\n[do X].",
+      "media": "feature.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.4,
+          "scale": 1.5
+        }
+      ]
     },
-    {"type": "keys", "duration": 3, "keys": ["F"], "label": "Or just press F"},
-    {"type": "cta", "duration": 4, "headline": "Focus mode is live", "subline": "Update to v2.4 or open the app.", "button": "Try it now"}
+    {
+      "type": "demo",
+      "duration": 4.8,
+      "layout": "full",
+      "media": "use.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "startFrom": 1.0,
+      "prompt": {
+        "label": "Just ask.",
+        "text": "What the person types",
+        "at": 0.45,
+        "until": 2.2
+      },
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.5,
+          "scale": 1.3
+        },
+        {
+          "at": 2.2,
+          "x": 0.5,
+          "y": 0.5,
+          "scale": 1.3
+        },
+        {
+          "at": 2.9,
+          "x": 0.5,
+          "y": 0.5,
+          "scale": 2.0
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "duration": 4.2,
+      "bg": "accent",
+      "layout": "right",
+      "headline": "Done in\n[one step].",
+      "media": "result.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.4,
+          "scale": 1.7
+        }
+      ]
+    },
+    {
+      "type": "end",
+      "duration": 4.4,
+      "headline": "Now in [Acme].",
+      "button": "Try it now",
+      "media": "result.mp4",
+      "mediaAspect": 1.6,
+      "uiWidth": 1280,
+      "view": [
+        {
+          "at": 0,
+          "x": 0.5,
+          "y": 0.35,
+          "scale": 1.2
+        }
+      ]
+    }
   ]
 }

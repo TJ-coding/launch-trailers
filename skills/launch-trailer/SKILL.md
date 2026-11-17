@@ -1,188 +1,168 @@
 ---
 name: launch-trailer
-description: Make a product launch trailer or a feature launch trailer (short promo video, MP4/GIF, 16:9, 1:1 or 9:16) from a JSON storyboard with the launch-trailers kit (Remotion). Use when the user asks for a launch video, trailer, promo, teaser, release video, "what's new" video, or an animated demo of a product or feature for a landing page, social post, Product Hunt or release notes.
+description: Make a product launch film, feature launch video or campaign clip (short promo video, MP4/GIF, 16:9, 1:1 or 9:16) with the launch-trailers kit (Remotion). Records the real product doing a real job in one scripted session, then cuts it into flat-colour scenes with heavy headlines. Use when the user asks for a launch video, trailer, promo, teaser, release video, "what's new" video, feature announcement clip, or an animated demo of a product or feature for a landing page, social post, Product Hunt or release notes.
 ---
 
-# Launch trailers
+# Launch films
 
-The kit renders a whole trailer from one `trailer.json` (a list of scenes) plus
-a `public/` folder of assets. You write JSON, not animation code. The kit root
-is two levels above this file (`$KIT`; in a consuming repo usually
+A film here is **one recorded session of the real product**, cut into a handful
+of scenes. Each scene is a flat colour field, the product large on it, and one
+heavy headline of two to five words with one phrase boxed. No stock photos, no
+actors, no 3D. The model is the release clips posted by accounts such as
+@HermesWatcher: claim, typed request, watch it work, result, handle.
+
+The kit root is two levels above this file (`$KIT`; in a consuming repo usually
 `trailers/kit`).
 
 ```bash
-$KIT/scripts/new-trailer.sh product|feature|scenario <dir> ["Brand"] [url]   # scaffold
-node $KIT/scripts/check-spec.mjs <dir>                              # validate + timeline
-$KIT/scripts/studio.sh <dir>                                        # live preview :3000
+$KIT/scripts/new-trailer.sh product|feature <dir> ["Brand"] [url]   # scaffold: trailer.json, record.mjs, storyboard.md
+node $KIT/scripts/record.mjs <dir> [--only clip]                    # play record.mjs in the real app -> public/*.mp4 + clips.json
+node $KIT/scripts/check-spec.mjs <dir>                              # validate + timeline + [craft] warnings
 $KIT/scripts/render.sh <dir> [landscape|square|vertical|all] [--gif] [--poster] [--draft] [--strict]
-$KIT/scripts/capture.sh <url> <dir>/public/x.png [1440x900] [--dark] # screenshot a page
-node $KIT/scripts/grid.mjs <dir>/public/x.png /tmp/x.grid.png        # read off coordinates
-$KIT/scripts/trim.sh rec.mov 3.2 9.8 <dir>/public/clip.mp4 [speed]   # cut a screen recording
+node $KIT/scripts/review.mjs <dir>                                  # contact sheets of the render: LOOK at them
+$KIT/scripts/studio.sh <dir>                                        # live preview :3000
+node $KIT/scripts/grid.mjs <frame.png> /tmp/g.png [20]              # read coordinates off a frame
+node $KIT/scripts/beats.mjs <dir>/public/music.mp3                  # only if the film has music
 ```
 
-The first run installs the kit's node_modules (Remotion and a headless Chrome).
-Output goes to `<dir>/out/` (gitignored).
+## What went wrong before (don't repeat it)
+
+The owner rejected two generations of trailers from this kit. Their words on
+the second: *"Everything is so incoherent, a man suddenly turns into a woman, a
+woman on a smartphone operating a desktop UI, no story, so chaotic and AI slop
+in general."* Both generations passed validation. The causes:
+
+- **Stock photos.** A different stranger in a different room in every scene,
+  with a small product card floating beside them. Nothing connected one scene
+  to the next, and the device in the photo didn't match the UI shown.
+- **Fragments, not a job.** Three-second crops from unrelated recordings with
+  unrelated data. The viewer never saw a task start and finish.
+- **A feature tour.** Each scene announced another feature; no scene followed
+  from the one before.
+- **Unreadable UI, equal-length scenes, a crossfade on every cut.**
+
+## The rules
+
+1. **One session, one person, one job.** Decide who is using the product and
+   what they get done in the next two minutes. Record that, start to finish, in
+   one browser session, so the task typed in scene 2 is the task ticked in
+   scene 4 and the one shown under its goal in scene 5. Continuity of data is
+   the story. If a scene could be removed without breaking the chain, it's a
+   tour stop: cut it.
+2. **One promise, told in the product's own method.** Write the sentence the
+   viewer should believe afterwards as `promise`. Scene 1 states it; the end
+   card repeats it. If the product has a named method or steps (Life Console:
+   Strategise → Distribute → Execute), that method is the film's structure:
+   one scene per step, in order, each labelled with a `kicker` ("1 ·
+   Strategise"), and the opener lists the steps. Ask the owner what the method
+   is and which screen they are proudest of; give that screen the most room.
+3. **The product is the picture.** Every scene except the end card shows the
+   real UI, large, doing something: text typed, a slot filled, a timer started.
+   No stock photos, no illustrations of people, no device mock-ups.
+4. **The data on screen must agree with the words.** Read every large value
+   in the shot against the headline. The owner rejected a dashboard reading
+   "Free until 18:30" under the line "tells you what to do now". Set the
+   clock, seed the data and tick off earlier tasks in `record.mjs` so that the
+   state on screen is the state the headline describes: a task running, not a
+   gap; nothing overdue beside a task marked done; no deadline shouting "due
+   today" for something already finished.
+5. **Frame a whole component.** The camera (`view`) shows one complete panel:
+   never a window that cuts words in half at its edge. The thing the headline
+   claims must be readable at phone size. Read `phone.png` to check.
+6. **Few words, heavy, one boxed.** Two to five words, broken into short lines
+   (about ten characters a line keeps the type big). Box the word that carries
+   the claim: `It finds [the time].` The headline says what it means for the
+   viewer; the picture shows it happening. Never caption the picture.
+7. **Show the request.** When the person types or asks something, show it as a
+   `prompt` bubble typed over the product, then cut to the product's answer.
+8. **Colour is the edit.** Paper for the opening and the end; one or two brand
+   colour fields in between; the product full-frame (`layout: "full"`) at least
+   once. Hard cuts only. Alternate which side the words sit on. Vary scene
+   lengths; the longest goes to the scene where the most happens.
+9. **The logo opens and closes it, large.** Ask the owner for the logo file;
+   don't assume the app icon is it. Open with the icon and name
+   (`brandMark`, from `brand.logo`); close with the full logo artwork, large,
+   on the `end` scene (`brand.lockup`). The owner chose that order: icon
+   first, full logo as the pay-off. An icon alone does not count as using the
+   logo.
+10. **End on a hero shot.** `end` with `media`: the logo, the promise, one
+   button and the URL, with the product rising large behind them. Use the
+   product's best state for it (the same rule about data applies).
+11. **Sound is the owner's call.** Ask once. Silent is acceptable (set
+   `"silent": true`); then the words carry everything. With music, pick the
+   track first and cut to it (`beats.mjs`).
+
+`check-spec.mjs` prints `[craft]` warnings for what it can measure. Fix each or
+be able to say in one sentence why it doesn't apply (an establishing shot of the
+whole app may have small labels; the big type still has to read). Only the
+review step can tell you the film is good.
 
 ## Workflow
 
-1. **Brief**: the product or feature, the audience and where it plays, the
-   format, the length, the one thing to remember, and the CTA. Ask only for
-   what you can't find in the repo (README, landing page, changelog, release
-   notes).
-2. **Storyboard**: fill `<dir>/storyboard.md` with one row per scene: type,
-   seconds, on-screen words (≤ 8) and what the viewer must see. Pick a recipe
-   below. Show it to the user before building if the brief was thin.
-3. **Assets** go into `<dir>/public/`: logo, screenshots (`capture.sh`, or
-   the user's own captures), clips (`trim.sh`) and music. Screenshots
-   should match the frame's aspect: 16:10 for browser and window frames
-   (1440×900 @2x), 9:19.5 for phone. For a different aspect, set `aspect`
-   on the scene.
-4. **Spec**: edit `trailer.json` (reference: `references/spec.md`). For
-   `zoom`, `callouts`, `cursor` and `assemble` pieces, run `grid.mjs` on the screenshot, look at
-   the image and read off the fractions. Don't guess them.
-5. **Check**: run `check-spec.mjs` until it passes, then render a few stills
-   and look at them before doing a full render:
-   `cd $KIT && npx remotion still Trailer /tmp/f.png --props=<dir>/trailer.json --public-dir=<dir>/public --frame=<n> --scale=0.5`
-   (the timeline from check-spec gives each scene's start time; frame = s × fps).
-6. **Render**: `render.sh <dir> --draft` for review. When it's approved,
-   run `render.sh <dir> all --gif --poster --strict`. Report the paths in
-   `out/`.
+1. **Brief.** Read the repo first (README, landing page, changelog, seed or
+   demo data). Then ask the owner what you can't find: who it's for, the one
+   promise, where it will be posted, sound or silent. They have said "you can
+   ask me all the questions": a wrong guess costs a full cut.
+2. **Storyboard.** Fill `<dir>/storyboard.md`: the viewer, the promise, then the
+   session as a chain: *they do X → the product does Y → which lets them do Z*.
+   Five scenes or fewer plus the end card. Use the product's own demo data if
+   it has a coherent persona; otherwise write one and seed it.
+3. **Record.** Run the app locally, write `<dir>/record.mjs`
+   (`references/recording.md`), run `record.mjs`. Look at a strip of every
+   clip before going on (`ffmpeg -i clip.mp4 -vf "fps=1,scale=640:-1,tile=5x3" -frames:v 1 strip.png`):
+   stray dialogs, toasts and open drawers show up here.
+4. **Spec.** Write `trailer.json` (`references/spec.md`). One `demo` scene per
+   clip; take `startFrom`, step times and zoom times from the marks in
+   `clips.json`. Read camera centres off a frame with `grid.mjs`; never guess
+   them.
+5. **Check.** `check-spec.mjs` until no errors.
+6. **Draft and review. Not optional.** `render.sh <dir> --draft`, then
+   `review.mjs <dir>`, then open `sheet.png` and `phone.png` and answer
+   `references/review.md`. Expect two or three rounds: reframe, shorten lines,
+   re-record a clip, cut a scene.
+7. **Final.** `render.sh <dir> all --gif --poster --strict`. Review the
+   vertical cut separately. Report the paths, what you cut and why, and what is
+   still weak.
 
-## Who is it for? (decide before any photo)
+## The shape
 
-Write the target viewer and their pain in one line in `storyboard.md`, from
-the product's own docs, landing page or owner. For example: "hyper-optimizers
-overloaded with tasks and deadlines who feel their life isn't making
-consistent progress". Every photo must show **that person in their real
-setting**: their desk, their campus, their late night. A generic "person
-with laptop" isn't enough. Then tell the story as their arc, not as a
-feature list:
+Lengths are examples. A product film runs 20–35s; a feature clip 12–25s.
 
-1. **Pain:** the moment they live now, e.g. notifications piling up at 23:40.
-2. **Turn:** the product in that same kind of setting, solving it.
-3. **Proof over time:** the small result, then the same again days or weeks
-   later. Time stamps like "Day 2", "Day 12", "Week 6" carry the change.
-4. **CTA.**
+| # | scene | example | length |
+|---|-------|---------|--------|
+| 1 | `demo`, paper, `tilt`, `brandMark`, `steps` | Logo + "Bring systems into [your life]." + 1 Strategise 2 Distribute 3 Execute, beside the live app | 4s |
+| 2 | `demo`, colour field, `layout: "top"`, `kicker` | "1 · Strategise" / "Start from [the goal]." over the goal flow lighting up | 6s |
+| 3 | `demo`, second colour, `kicker`, `steps` | "2 · Distribute" / "Level [the week]." while an overloaded day is evened out and time-boxed | 6–7s |
+| 4 | `demo`, `layout: "full"`, `kicker` | "3 · Execute" / "Do the one thing [now]." over the running task | 4–5s |
+| 5 | `end` with `media` | hero shot: logo, the promise, Try it now, URL | 4–5s |
 
-## Recipes
+A product without a named method uses the same shape with a typed request in
+the middle (`prompt`: "Just type it."), as in `life-console/trailers/launch-v2`.
 
-**Best: context + components** (the owner's pick). Each scene is a `moment`: the
-target user in their real setting (lit photo), with **one live `widget` overlay**
-(a cropped recording of the component that solves that moment) floating on
-the empty side, and a 3–5-word serif headline. Open with one `mood: "problem"`
-moment: a dark photo, notifications piling up, no widget. About 20s:
-problem → 4 moments → `cta` with a lit `photo`. Example:
-`life-console/trailers/life-console-context`.
+**Feature clip (existing users).** Skip the opener's explanation: scene 1 is
+"[Product] can now [do X]." beside the feature, then the request, the result,
+the end card. Three scenes plus the end card is enough.
 
-Without suitable photos, fall back to **components at work**. Keep it concise (around 20s). Use **scenario** only with
-photos that genuinely show the target viewer's own setting (the owner rejected
-generic stock scenes).
+**How-to (60–80s, only on request).** Numbered steps: put `1/5 Open Settings`
+style labels in the headline, one `demo` scene per step, a recap with `steps`.
 
-**Scenario / day in the life (20–35s), `new-trailer.sh scenario`**
-4–6 `moment` scenes, then a `cta` (with `photo`). Each moment is one concrete
-situation: a time stamp, a context photo, the product on the screen in that
-photo (or a notification next to it), a ≤ 6-word serif headline with one
-*accent* word, and an optional mono `chip` as proof. Order the moments through a
-day (morning → work → on the move → evening) or through one task end to end.
-References: Project Glass "One day…", and the Hermes plugin videos (home at
-dusk, then lights, heat, blinds, each a single beat).
+Worked example: `life-console/trailers/launch-v3` (trailer.json, record.mjs,
+seed.mjs, storyboard.md).
 
-**Product launch: components at work (≈20s, the owner's preferred style)**
-`problem` (dark, 3 short lines) → `logo` (the light comes on) → 3–4 `widget`
-scenes → `cta`. Each widget is **one component working**, cropped from a real
-screen recording: a countdown ticking, a parser reading a typed line, tasks
-dropping into a week, a graph tracing. One title of 3–5 words each. No
-feature lists, no keys or montage unless asked. Record the clips first
-(screen recording, or the app's own demo videos), then find each crop with
-`grid.mjs` on a frame (`ffmpeg -ss <t> -i clip.mp4 -frames:v 1 f.png`). Crop
-tight enough that UI text is readable at 1080p: about 0.35–0.7 of the
-recording's width.
+## Older scene types
 
-**Product tour (30–60s)**
-`hook` → `problem` → `logo` → `screen` ×2–3 → `keys`/`stat`/`quote` →
-`features` → `montage` → `cta`.
+`moment` (stock photo + floating widget), `widget`, `screen`, the 3D scenes,
+`features`, `montage` and the rest still render, and are documented in
+`references/spec.md` and `references/moments.md`. Don't use them unless the
+owner asks for that look by name; never mix them with `demo` scenes.
 
-**Feature launch (15–30s, one feature, existing users)**
-`announce` (badge "New in vX") → `moment` (the situation where the feature
-helps) → `screen` with `cursor` + `callouts` (the feature in use) →
-`beforeAfter` → `keys` → `cta`.
+## Extending the kit
 
-**3D scenes (opt-in only)**: `device3d`, `assemble`, `carousel3d` and
-`logo3d` exist but are not in any recipe. The procedural models look
-synthetic next to real photos. Use them only when the user asks for 3D.
+- New look: `theme` (paper and ink colours, accent, font).
+- Something `demo` can't do: add a prop to `framework/src/scenes/Demo.tsx`, its
+  type in `spec.ts`, its checks in `scripts/check-spec.mjs`, and document it in
+  `references/spec.md`. Extend the kit; don't fork it per film.
+- A rule learned the hard way: a `[craft]` warning in `check-spec.mjs` if it
+  can be measured, a question in `references/review.md` if it can only be seen.
 
-### Photo library: reuse before you search
-
-`$KIT/scripts/library.mjs` keeps every photo you've used: its source, credit,
-tags, personas, the scene, tone, headline side and **measured screen
-corners**. The metadata is committed in `library/photos.json`; the files are
-cached in `library/cache/` (gitignored, re-downloaded on demand).
-
-```bash
-node $KIT/scripts/library.mjs list [--persona hyper-optimizer] [--tag overwhelmed]
-node $KIT/scripts/library.mjs sheet --persona founder /tmp/s.png   # look before choosing
-node $KIT/scripts/library.mjs use pexels-12470765 pexels-5717778 <trailer-dir>   # copies + CREDITS + moment JSON with corners
-node $KIT/scripts/library.mjs search "student desk at night"       # needs UNSPLASH_ACCESS_KEY or PEXELS_API_KEY
-node $KIT/scripts/library.mjs add pexels:<id> --scene "…" --tags … --personas … --time … --tone … --headline …
-node $KIT/scripts/library.mjs corners <id> monitor "x,y x,y x,y x,y"
-```
-
-Add every new photo you use, with honest tags and personas, so the next
-trailer starts from the library. Keys live in
-`~/.config/launch-trailers/keys.env` (`UNSPLASH_ACCESS_KEY=…`,
-`PEXELS_API_KEY=…`), never in a repo.
-
-### Making a moment
-
-1. Find a photo, library first: the user's own, AI-generated, or free stock. Pexels photos
-   are free for commercial use, and Pexels is searchable from the web. A
-   direct image URL looks like
-   `https://images.pexels.com/photos/<id>/pexels-photo-<id>.jpeg?w=2400`.
-   Pick photos with a visible, unobstructed screen at a moderate angle (a
-   blank or white screen is ideal), one consistent light and colour mood, and
-   empty space on one side for the headline. List each source in the trailer's
-   `CREDITS.md`.
-2. Run `grid.mjs` on the photo with 20 divisions
-   (`node $KIT/scripts/grid.mjs photo.jpg /tmp/g.png 20`), look at it, and
-   read the screen's four corners as fractions: top-left, top-right,
-   bottom-right, bottom-left. These go in `screens[].corners`. Ignore the
-   rounded corners and use where the edges would meet.
-3. Choose `tone`: `dark` (ink text) for bright photos, `light` for dark
-   ones. Put the headline on the empty side, and set `headlineWidth` so it
-   wraps before it reaches the device.
-4. Move the camera towards the screen (`camera.to` at about the screen's centre,
-   scale 1.1–1.3). Bring overlays in at 1–2s, after the headline.
-5. Render a still at the middle of the moment and check that the screen sits
-   exactly in the bezel. Adjust corners in steps of 0.005.
-
-## Rules of thumb
-
-- **Problems are dark; the solution brings light.** Set `mood: "problem"` on
-  problem scenes. check-spec rejects bright photos on them.
-- **Concise.** About 20s, 3–5 words per title, one component per scene.
-- **One idea per scene.** Keep on-screen text to 8 words or fewer. The
-  viewer gets about 3s per line.
-- **Show the real product.** Real UI beats feature cards: use `screen`
-  scenes for proof and `features` for summary.
-- **Zoom to the point.** Every `screen` should push in on the thing the title
-  claims (scale 1.4–1.8), then add a callout or cursor click there.
-- **Faces and arrows point at the product or CTA, never off-frame.**
-- **End on the CTA** with the URL visible for at least 2s. The default
-  button is "Try it now".
-- **Silent-first.** Most feeds autoplay muted, so the story has to work
-  without sound. Music is a bonus: set `music.src` to a licensed track.
-- **Vertical (9:16)**: keep titles short. Phone-frame screenshots work best.
-  Check the stills, since text wraps differently.
-
-## When the spec can't express it
-
-Extend the kit; don't fork it per trailer:
-- New look: `theme` (colours, font, radius, background).
-- New scene type: add `framework/src/scenes/<Name>.tsx`, register it in
-  `scenes/index.ts`, add its type to `spec.ts` and the required fields to
-  `scripts/check-spec.mjs`, then document it in `references/spec.md`.
-  Build from the components in `references/components.md`.
-- A one-off composition: import from `framework/src/lib.ts` (every
-  component, scene and helper is exported there).
-
-Then run `npm test` in `$KIT` (validates the templates and typechecks).
+Then run `npm test` in `$KIT`.

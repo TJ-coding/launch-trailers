@@ -12,6 +12,7 @@ export type WidgetSource = {
   mediaAspect?: number; // media width / height (default 16/10)
   startFrom?: number; // seconds into the recording
   playbackRate?: number;
+  focus?: {x: number; y: number; scale: number; at?: number; until?: number};
 };
 
 /** Aspect (w / h) of the cropped component. */
@@ -28,6 +29,7 @@ export const WidgetCard: React.FC<WidgetSource & {width: number; at?: number; du
   mediaAspect = 16 / 10,
   startFrom = 0,
   playbackRate = 1,
+  focus,
   width,
   at = 0,
   duration = 4,
@@ -45,6 +47,12 @@ export const WidgetCard: React.FC<WidgetSource & {width: number; at?: number; du
   const innerH = innerW / mediaAspect;
   const enter = interpolate(t, [0, 0.6], [0, 1], {...clamp, easing: Easing.bezier(0.16, 1, 0.3, 1)});
   const drift = interpolate(t, [0, duration], [1, 1.03], clamp);
+  // Punch-in: scale the recording around the focus point, kept inside the card.
+  const fAt = focus?.at ?? 0.9;
+  const ease = Easing.bezier(0.65, 0, 0.35, 1);
+  const fIn = focus ? interpolate(t, [fAt, fAt + 0.7], [0, 1], {...clamp, easing: ease}) : 0;
+  const fOut = focus?.until !== undefined ? interpolate(t, [focus.until, focus.until + 0.6], [0, 1], {...clamp, easing: ease}) : 0;
+  const fs = 1 + ((focus?.scale ?? 1) - 1) * fIn * (1 - fOut);
   if (t < 0) return null;
   const ok = hasFile(media);
   const mediaStyle: React.CSSProperties = {position: 'absolute', left: -cx * innerW, top: -cy * innerH, width: innerW, height: innerH, maxWidth: 'none'};
@@ -64,6 +72,7 @@ export const WidgetCard: React.FC<WidgetSource & {width: number; at?: number; du
         filter: `blur(${(1 - enter) * 8 * u}px)`,
       }}
     >
+      <div style={{position: 'absolute', inset: 0, transform: `scale(${fs})`, transformOrigin: `${(focus?.x ?? 0.5) * 100}% ${(focus?.y ?? 0.5) * 100}%`}}>
       {ok ? (
         <Sequence from={Math.round(at * fps)} layout="none">
           {VIDEO.test(media!) ? (
@@ -77,6 +86,7 @@ export const WidgetCard: React.FC<WidgetSource & {width: number; at?: number; du
           {media ? `missing: public/${media}` : 'component recording goes here'}
         </div>
       )}
+      </div>
     </div>
   );
 };

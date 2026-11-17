@@ -44,6 +44,8 @@ export const Moment: React.FC<MomentScene & {duration?: number}> = ({
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const {u, width: W, height: H, portrait} = useLayout();
+  const theme = useTheme();
+  const g = GRADES[theme.grade] ?? GRADES.none;
   const t = frame / fps;
   const size = useImageSize(VIDEO.test(photo) ? undefined : photo) ?? {w: 16, h: 9};
   // (missing photo: useImageSize returns 16:9 and Photo draws a placeholder)
@@ -74,8 +76,9 @@ export const Moment: React.FC<MomentScene & {duration?: number}> = ({
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
       <div style={{position: 'absolute', left: 0, top: 0, width: cw, height: ch, transform: `translate(${left}px, ${top}px) scale(${s})`, transformOrigin: '0 0'}}>
-        <Photo src={photo} />
-        {after && <Photo src={after} style={{opacity: afterO}} />}
+        <Photo src={photo} style={{filter: g.filter}} />
+        {after && <Photo src={after} style={{opacity: afterO, filter: g.filter}} />}
+        {g.wash && <div style={{position: 'absolute', inset: 0, background: g.wash, mixBlendMode: 'soft-light'}} />}
         {glow && <Glow {...glow} cw={cw} ch={ch} t={t} />}
         {screens.map((sc, i) => (
           <ScreenInPhoto key={i} {...sc} cw={cw} ch={ch} t={t} />
@@ -104,6 +107,14 @@ export const Moment: React.FC<MomentScene & {duration?: number}> = ({
   );
 };
 
+/** One grade over every photo: pull saturation together, then wash with one colour. */
+const GRADES: Record<string, {filter?: string; wash?: string}> = {
+  none: {},
+  warm: {filter: 'saturate(0.8) contrast(1.05)', wash: 'linear-gradient(180deg, rgba(255,176,96,0.34), rgba(255,140,60,0.2))'},
+  cool: {filter: 'saturate(0.75) contrast(1.05)', wash: 'linear-gradient(180deg, rgba(80,150,255,0.3), rgba(40,90,200,0.22))'},
+  film: {filter: 'saturate(0.7) contrast(1.1) brightness(0.96)', wash: 'linear-gradient(180deg, rgba(255,200,140,0.22), rgba(40,70,110,0.28))'},
+};
+
 const DEFAULT_POS: Record<Overlay['kind'], [number, number]> = {notification: [0.6, 0.08], bubble: [0.62, 0.4], toast: [0.62, 0.78], chip: [0.06, 0.86], widget: [0.5, 0.3]};
 
 const OverlayAt: React.FC<{o: Overlay; W: number; H: number; duration: number}> = ({o, W, H, duration}) => {
@@ -117,7 +128,7 @@ const OverlayAt: React.FC<{o: Overlay; W: number; H: number; duration: number}> 
       {o.kind === 'toast' && <Toast text={o.text ?? ''} at={o.at} until={o.until} />}
       {o.kind === 'chip' && <Chip text={o.text ?? ''} at={o.at} until={o.until} />}
       {o.kind === 'widget' && (
-        <WidgetCard media={o.media} crop={o.crop} mediaAspect={o.mediaAspect} startFrom={o.startFrom} playbackRate={o.playbackRate} width={(o.width ?? 900) * u} at={o.at ?? 0.6} duration={duration} glass />
+        <WidgetCard media={o.media} crop={o.crop} mediaAspect={o.mediaAspect} startFrom={o.startFrom} playbackRate={o.playbackRate} focus={o.focus} width={(o.width ?? 900) * u} at={o.at ?? 0.6} duration={duration} glass />
       )}
     </div>
   );

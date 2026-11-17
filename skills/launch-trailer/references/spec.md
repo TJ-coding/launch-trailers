@@ -10,16 +10,71 @@ Files are names inside the trailer's `public/` folder.
 |---|---|---|
 | `type` | required | `"product"`, `"feature"` or `"scenario"` (only used by checks and recipes) |
 | `title` | | for humans, shown by check-spec |
+| `promise` | | the one sentence the viewer should believe afterwards. check-spec and review.mjs print it; every scene must serve it |
 | `format` | `landscape` | `landscape` 1920×1080 · `square` 1080×1080 · `vertical` 1080×1920 (render.sh can override) |
 | `fps` | 30 | |
-| `brand` | required | `{name, logo?, url?, tagline?}`; without a logo file you get a gradient lettermark |
-| `theme` | | `{bg, bg2, fg, muted, accent, accent2, surface, font, display, radius, background}`; `display`: headline font for moments and CTA (Instrument Serif · Fraunces · Newsreader · Playfair Display, or a body font); `font`: Inter · Poppins · Space Grotesk · Manrope · DM Sans; `background`: gradient · grid · dots · solid |
-| `music` | | `{src, volume=0.7, fadeIn=0.5, fadeOut=1.5, startFrom=0}` |
-| `transition` | `fade` | default between scenes: fade · slide · wipe · none |
-| `transitionDuration` | 0.4 | overlap between scenes (subtracted from total length) |
-| `scenes` | required | array; each has `type`, optional `duration`, `transition`, `audio` (a voice-over or sound effect for that scene), `mood` problem·solution (`problem` is the default for the `problem` type) |
+| `brand` | required | `{name, logo?, lockup?, url?, tagline?}`. `logo`: the small square mark. `lockup`: the full logo artwork that already contains the name; when set, the `end` scene shows it large. The opener's `brandMark` still shows the small mark and name (`brandMark: "lockup"` would show the artwork there too). Without either you get a gradient lettermark |
+| `theme` | | `{bg, bg2, fg, muted, accent, accent2, surface, font, display, radius, background}`; `display`: headline font for moments and CTA (Instrument Serif · Fraunces · Newsreader · Playfair Display, or a body font); `font`: Sora (the demo-film default) · Hanken Grotesk · Schibsted Grotesk · Inter · Poppins · Space Grotesk · Manrope · DM Sans; `background`: gradient · grid · dots · solid; `grade`: none · film · warm · cool (one colour grade over every context photo, so mixed sources read as one film) |
+| `music` | | `{src, volume=0.7, fadeIn=0.5, fadeOut=1.5, startFrom=0, bpm, offset}`; `bpm` and `offset` (seconds to the first beat) come from `scripts/beats.mjs`, and check-spec then reports every cut that misses the beat |
+| `silent` | false | `true` when the owner chose a film without sound: check-spec and review.mjs stop asking for music |
+| `transition` | `fade` | default between scenes: cut (hard cut; `none` is the same) · fade · slide · wipe. Set `cut` here and `fade` on the one or two scenes that turn the story |
+| `transitionDuration` | 0.4 | overlap of a fade/slide/wipe (subtracted from total length) |
+| `scenes` | required | array; each has `type`, optional `duration`, `transition` (the change **into** this scene), `audio` (a voice-over or sound effect for that scene), `mood` problem·solution (`problem` is the default for the `problem` type) |
 
-## Scenes
+## Demo films: `demo` and `end`
+
+The default look (see SKILL.md). Set the theme once:
+
+```json
+"transition": "cut",
+"theme": {"bg": "#F2F0EB", "fg": "#101216", "accent": "#14B8D4", "accent2": "#F2B632", "font": "Sora"}
+```
+
+`bg` is the paper colour, `fg` the ink, `accent` and `accent2` the two colour
+fields and the selection box.
+
+### `demo` (default 4s)
+
+| field | default | |
+|---|---|---|
+| `headline` | | 2–5 words. `[phrase]` gets the selection box; `\n` breaks the line. Keep lines near ten characters: the type is sized to fit the longest line |
+| `bg` | `paper` | `paper` · `ink` · `accent` · `accent2` · any hex. Text colour follows automatically |
+| `layout` | `left` | where the words sit: `left` · `right` · `top`, or `full` (the product fills the frame, words over it). Square and vertical formats always stack |
+| `media` | | a clip from `record.mjs` (or a screenshot) |
+| `mediaAspect`, `uiWidth` | 1.6, 1280 | copy from `clips.json` |
+| `startFrom`, `playbackRate` | 0, 1 | where in the clip the scene starts, and how fast it plays |
+| `view` | whole clip | the camera: `[{at, x, y, scale}]`, centre as fractions of the clip, eased between keys. One key = a fixed framing; add keys to push in or pan when something happens |
+| `windowWidth` | 0.54 | share of the frame width the product window may take; the words get the rest |
+| `windowAspect` | `mediaAspect` | a window of another shape (1.05 for a tall panel, 1.9 for a wide strip); the camera fills it |
+| `tilt` | false | hold the window in perspective: the opening shot |
+| `brandMark` | false | the small mark and name above the headline: the opening shot. `"lockup"` shows the full logo artwork instead |
+| `kicker` | | a small step label above the headline: `"1 · Strategise"`. Use it when the film follows the product's own numbered method |
+| `prompt` | | what the person typed: `{label?, text, at=0.4, cps=24, until?}`. In `full` layout it sits centred over the dimmed product and leaves at `until` |
+| `steps` | | `[{text, at}]`: short results that tick in under the headline, in step with the clip. `check: true` shows ticks instead of numbers |
+| `tag` | | a small label on the pointer beside the boxed phrase (`""` uses the brand name) |
+
+Framing a camera: take a frame of the clip (`ffmpeg -ss 3 -i clip.mp4 -frames:v 1 f.png`),
+run `grid.mjs` on it and read the component's left, right, top and bottom as
+fractions. The visible share of the clip is `1/scale` wide (times
+`windowAspect/mediaAspect` when the window is narrower than the clip) and
+`1/scale` tall. Choose `scale` so the whole component fits, and `x`, `y` as its
+centre. If a word is cut at the window's edge, the framing is wrong.
+
+### `end` (default 3.5s)
+
+`headline` (with a `[boxed]` phrase), `button="Try it now"`, `url` (falls back
+to `brand.url`), `note?` (one small line, e.g. the method's three steps),
+`bg="paper"`. The logo is always shown. With `brand.lockup`, set `bg` to the
+artwork's own background colour (sample a corner pixel, e.g. `"#111111"`) so the
+logo sits on the field with no visible square; in landscape the lockup goes
+left and the words right.
+
+Add `media` (with `mediaAspect`, `startFrom`, `view`) for a **hero shot**: the
+product rises large behind the words, tilted back, cropped by the bottom of the
+frame. Frame `view` on the top of the product's best screen, since only the top
+half of the window shows.
+
+## Older scenes
 
 | type | default s | fields |
 |---|---|---|
@@ -38,7 +93,7 @@ Files are names inside the trailer's `public/` folder.
 | `device3d` | 5 | `device` laptop·phone·duo, `media` (laptop screen, or phone screen when device=phone), `phoneMedia` (duo), `motion` spin·open·orbit·rise·float, `color` space·silver·midnight, `title?`, `caption?`, `pushIn` (dive into the laptop screen at the end, laptop only) |
 | `assemble` | 5 | `media`, `pieces[] {x,y,w,h}` (widget rectangles, fractions; ≤ 8), `mode` assemble·explode, `aspect?`, `title?`, `caption?` |
 | `carousel3d` | 6 | `items[] {media, label?}` (time split evenly; each comes to the front), `title?`, `aspect=16/10` |
-| `widget` | 4 | `media` (screen recording or screenshot), `crop [x, y, w, h]` (the one component, as fractions of the media), `mediaAspect=16/10`, `startFrom` (s), `playbackRate`, `title?`, `caption?`. The component plays big on its own card |
+| `widget` | 4 | `media` (screen recording or screenshot), `crop [x, y, w, h]` (the one component, as fractions of the media), `mediaAspect=16/10`, `startFrom` (s), `playbackRate`, `focus {x, y, scale, at=0.9, until?}` (punch in on a point of the crop), `uiWidth=1440` (CSS px width of the recorded window, for the legibility estimate), `title?`, `caption?`. The component plays big on its own card |
 | `moment` | 4 | `photo` (context photo or video), `after?` + `changeAt` (crossfade to a changed version of the same shot), `camera {from, to}` (`{x, y, scale}`, slow push; default 1 → 1.08), `time?`, `timeLabel?`, `headline?` (`*accent*` words in italics), `headlinePos` top-left·top-right·bottom-left·bottom-right·center, `headlineWidth?`, `tone` light·dark, `shade=true`, `chip?`, `screens[] {media, corners, at, radius, glare}`, `overlays[]`, `glow? {x, y, at, size}` |
 | `cta` | 4 | `headline` (`*accent*` supported), `subline?`, `button="Try it now"`, `url?` (falls back to `brand.url`), `showLogo=true`, `photo?` (blurred, dimmed background) |
 
@@ -58,8 +113,12 @@ Files are names inside the trailer's `public/` folder.
   with the camera, and powers on at `at`. `radius` is a fraction of the screen
   width (phones ≈ 0.09).
 - A `widget` overlay is one product component at work: a crop of a recording
-  (same fields as the `widget` scene), floating as a card `width` px wide (at
-  1080p). Put it on the empty side of the photo, never over faces.
+  (same fields as the `widget` scene, including `focus`), floating as a card
+  `width` px wide (at 1080p). Put it on the empty side of the photo, never
+  over faces.
+- `focus`: `x`, `y` are fractions of the **crop** (the point that stays put
+  while the rest scales), `scale` 1.2–2. Use it when the claim lives in one
+  part of the component: the task title, the parsed chips, the goal node.
 - `overlays` sit on the **frame** (not the photo); `pos` is their top-left as
   frame fractions. A `bubble` lights its words up as if spoken (`speak: false`
   shows it all at once). `notification` takes `app` (default brand name),
@@ -114,10 +173,30 @@ accent light. Solution scenes (the default) get the theme's glow. check-spec
 and warns when a problem comes after the solution has started. Light means
 relief: never show a problem in a bright room.
 
-## Timing tips
+## Timing
 
-- Total length = sum of durations − (scenes − 1) × transitionDuration. Check
-  it with `check-spec.mjs`.
-- Text appears in about 0.3–1.2s, so leave at least 1.5s of hold after the
-  last line before the scene ends.
-- Durations: hook 2.5–3.5, screen 4–6, cta 3.5–5.
+- Total length = sum of durations − transitionDuration for each fade, slide
+  or wipe. `check-spec.mjs` prints the timeline: start, length, the change
+  into each scene, and ▣ where the product is on screen.
+- With a track: `node scripts/beats.mjs public/music.mp3` prints the beat
+  length. Make every scene a whole number of beats and use hard cuts; the
+  cuts then land on the beat. A fade reads as a cut at its midpoint, so the
+  scene before it runs half a transition longer.
+- Vary lengths: quick proofs 2–3s, the payoff 4s or more, the CTA 3.5–4.5s.
+- Reading time: about 0.3s a word plus 0.6s. check-spec warns when a scene
+  is shorter than its words need.
+
+## What check-spec's [craft] warnings mean
+
+| warning | fix |
+|---|---|
+| no promise | write `promise`; cut scenes that don't prove it |
+| opens on a logo / product appears after 5s | open on the pain or the result; shorten or merge what comes before the first ▣ |
+| too much problem | one beat of pain, under a quarter of the length |
+| UI text about N px | crop to one component, widen the card, or add `focus` |
+| N words in Ns / title over 6 words / title and caption | cut words |
+| N scenes the same length | vary them; hold the payoff longest |
+| crossfades | `"transition": "cut"` at the top level, `fade` only on the turn |
+| feature tour / features list | keep the 2–3 scenes that prove the promise |
+| CTA under 3s / win not held | lengthen the last two scenes |
+| no music / no bpm / cut off the beat | add a track, run `beats.mjs`, use the suggested length |
